@@ -1,0 +1,291 @@
+{
+  "name": "Content Intelligence Workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "day",
+              "hour": 9,
+              "triggerAtHour": true
+            }
+          ]
+        }
+      },
+      "id": "node-schedule-trigger",
+      "name": "Schedule Trigger (Daily 9 AM)",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.1,
+      "position": [100, 300],
+      "webhookId": "content-intelligence"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.minimax.chat/v1/text/chatcompletion_v2",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "bearerAuth",
+        "sendHeaders": true,
+        "headers": {
+          "headerParameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer {{$env.MINIMAX_API_KEY}}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "model",
+              "value": "MiniMax-Text-01"
+            },
+            {
+              "name": "messages",
+              "value": "=[{\"role\":\"system\",\"content\":\"You are a content intelligence analyst. Search for trending topics and viral content patterns in the AI/automation/content marketing space.\"},{\"role\":\"user\",\"content\":\"Search for trending topics in AI tools, automation, productivity. Find content that is getting high engagement. Return a structured JSON list of trending topics with engagement metrics.\"}]"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 30000
+        }
+      },
+      "id": "node-minimax-search",
+      "name": "MiniMax - Search Trending Topics",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [320, 300]
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "={{ $json.competitor_rss_url }}",
+        "options": {
+          "timeout": 30000
+        }
+      },
+      "id": "node-fetch-competitor-rss",
+      "name": "HTTP Request - Competitor RSS Feed",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [540, 200]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.minimax.chat/v1/text/chatcompletion_v2",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "bearerAuth",
+        "sendHeaders": true,
+        "headers": {
+          "headerParameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer {{$env.MINIMAX_API_KEY}}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "model",
+              "value": "MiniMax-Text-01"
+            },
+            {
+              "name": "messages",
+              "value": "=[{\"role\":\"system\",\"content\":\"You analyze competitor screenshots and extract engagement patterns.\"},{\"role\":\"user\",\"content\":\"Analyze this competitor content screenshot. What makes the hook effective? What is the visual hierarchy? What emotional triggers are used? Return structured analysis.\"}]"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 30000
+        }
+      },
+      "id": "node-minimax-vision",
+      "name": "MiniMax - Vision Analysis",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [540, 400]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.minimax.chat/v1/text/chatcompletion_v2",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "bearerAuth",
+        "sendHeaders": true,
+        "headers": {
+          "headerParameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer {{$env.MINIMAX_API_KEY}}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "model",
+              "value": "MiniMax-Text-01"
+            },
+            {
+              "name": "messages",
+              "value": "=[{\"role\":\"system\",\"content\":\"You are a content strategist. Generate weekly intelligence briefs from trending data and competitor analysis.\"},{\"role\":\"user\",\"content\":\"Based on these findings: {{ $json.trending_topics }} and {{ $json.competitor_analysis }}, generate an intelligence brief with: 1) Top 3 trending hooks, 2) Content format recommendations, 3) Posting timing suggestions, 4) Platform-specific adaptations. Format as a structured report.\"}]"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 30000
+        }
+      },
+      "id": "node-generate-brief",
+      "name": "MiniMax - Generate Intelligence Brief",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [760, 300]
+    },
+    {
+      "parameters": {
+        "operation": "insert",
+        "table": "ideas",
+        "columns": {
+          "assignments": [
+            {
+              "column": "title",
+              "value": "Intelligence Brief - {{ $json.date }}"
+            },
+            {
+              "column": "core_concept",
+              "value": "={{ $json.brief_content }}"
+            },
+            {
+              "column": "selected_skeleton",
+              "value": "REPLACEMENT_STACK"
+            },
+            {
+              "column": "status",
+              "value": "DRAFT"
+            }
+          ]
+        }
+      },
+      "id": "node-supabase-insert",
+      "name": "Supabase - Store Intelligence Report",
+      "type": "n8n-nodes-supabase.supabase",
+      "typeVersion": 1,
+      "position": [980, 300],
+      "credentials": {
+        "supabaseApi": {
+          "id": "supabase-credential",
+          "name": "Supabase API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $env.SLACK_WEBHOOK_URL }}",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "text",
+              "value": "=:raw"
+            },
+            {
+              "name": "attachments",
+              "value": "=[{\"color\":\"#439FE0\",\"title\":\"Daily Content Intelligence\",\"text\":\"Trending topics analyzed. Competitor monitoring complete. New ideas queued.\"},{\"title\":\"Top Hooks\",\"text\":\"{{ $json.top_hooks }}\"},{\"title\":\"Recommendations\",\"text\":\"{{ $json.recommendations }}\"}]"
+            }
+          ]
+        }
+      },
+      "id": "node-slack-notify",
+      "name": "Slack - Intelligence Alert",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [1200, 300]
+    }
+  ],
+  "connections": {
+    "Schedule Trigger (Daily 9 AM)": {
+      "main": [
+        [
+          {
+            "node": "MiniMax - Search Trending Topics",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "MiniMax - Search Trending Topics": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request - Competitor RSS Feed",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "MiniMax - Vision Analysis",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request - Competitor RSS Feed": {
+      "main": [
+        []
+      ]
+    },
+    "MiniMax - Vision Analysis": {
+      "main": [
+        []
+      ]
+    },
+    "MiniMax - Generate Intelligence Brief": {
+      "main": [
+        [
+          {
+            "node": "Supabase - Store Intelligence Report",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase - Store Intelligence Report": {
+      "main": [
+        [
+          {
+            "node": "Slack - Intelligence Alert",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner",
+    "errorWorkflow": ""
+  },
+  "staticData": null,
+  "tags": ["content-intelligence", "competitor-monitoring", "daily"],
+  "meta": {
+    "templateCredsSetup": [
+      {
+        "name": "Supabase API",
+        "setup": "Configure with your Supabase project URL and service role key"
+      }
+    ],
+    "templateId": "content-intelligence"
+  }
+}

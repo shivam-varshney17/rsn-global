@@ -1,0 +1,453 @@
+{
+  "name": "Distribution Agent Workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 1
+            }
+          ]
+        }
+      },
+      "id": "node-schedule-trigger",
+      "name": "Schedule Trigger (Hourly)",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.1,
+      "position": [100, 300],
+      "webhookId": "distribution-agent"
+    },
+    {
+      "parameters": {
+        "operation": "select",
+        "table": "content_pieces",
+        "columns": ["*"],
+        "filter": "status = 'PUBLISHED' AND updated_at > now() - interval '2 hours'"
+      },
+      "id": "node-get-recent-posts",
+      "name": "Supabase - Get Recent Published Posts",
+      "type": "n8n-nodes-supabase.supabase",
+      "typeVersion": 1,
+      "position": [320, 300],
+      "credentials": {
+        "supabaseApi": {
+          "id": "supabase-credential",
+          "name": "Supabase API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "https://api.twitter.com/2/tweets/{{ $json.external_post_id }}/metrics",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "oAuth2Api",
+        "sendHeaders": true,
+        "headers": {
+          "headerParameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer {{ $json.access_token }}"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 30000
+        }
+      },
+      "id": "node-twitter-metrics",
+      "name": "Twitter API - Get Tweet Metrics",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [540, 180]
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "https://api.linkedin.com/v2/organizationalEntityFollowerStatistics?q=organizationalEntity&organizationalEntity=urn:li:organization:{{ $json.company_id }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "oAuth2Api",
+        "sendHeaders": true,
+        "headers": {
+          "headerParameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer {{ $json.access_token }}"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 30000
+        }
+      },
+      "id": "node-linkedin-metrics",
+      "name": "LinkedIn API - Get Post Metrics",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [540, 300]
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "https://graph.facebook.com/v18.0/{{ $json.post_id }}/insights",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "oAuth2Api",
+        "sendHeaders": true,
+        "headers": {
+          "headerParameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer {{ $json.access_token }}"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 30000
+        }
+      },
+      "id": "node-instagram-metrics",
+      "name": "Instagram API - Get Media Insights",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [540, 420]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.minimax.chat/v1/text/chatcompletion_v2",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "bearerAuth",
+        "sendHeaders": true,
+        "headers": {
+          "headerParameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer {{$env.MINIMAX_API_KEY}}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "model",
+              "value": "MiniMax-Text-01"
+            },
+            {
+              "name": "messages",
+              "value": "=[{\"role\":\"system\",\"content\":\"You generate engaging comment replies that sound human. Be helpful, add value, never sound like a bot. Use the Comment Reply Bank principles.\"},{\"role\":\"user\",\"content\":\"Generate a reply to this comment on a {{ $json.platform }} post about {{ $json.topic }}: '{{ $json.comment_text }}'. The original post was about: '{{ $json.post_content }}'. Keep it under 100 characters, conversational, and helpful.\"}]"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 30000
+        }
+      },
+      "id": "node-generate-reply",
+      "name": "MiniMax - Generate Comment Reply",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [760, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.twitter.com/2/tweets/{{ $json.tweet_id }}/reply",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "oAuth2Api",
+        "sendHeaders": true,
+        "headers": {
+          "headerParameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer {{ $json.access_token }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "text",
+              "value": "={{ $json.reply_text }}"
+            },
+            {
+              "name": "reply",
+              "value": "{\"in_reply_to_tweet_id\": \"{{ $json.tweet_id }}\"}"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 30000
+        }
+      },
+      "id": "node-twitter-reply",
+      "name": "Twitter API - Post Reply",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [980, 180]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.linkedin.com/v2/comments",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "oAuth2Api",
+        "sendHeaders": true,
+        "headers": {
+          "headerParameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer {{ $json.access_token }}"
+            },
+            {
+              "name": "X-Restli-Protocol-Version",
+              "value": "2.0.0"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "actor",
+              "value": "urn:li:person:{{ $json.person_id }}"
+            },
+            {
+              "name": "message",
+              "value": "{\"text\":\"{{ $json.reply_text }}\"}"
+            },
+            {
+              "name": "subject",
+              "value": "{{ $json.post_urn }}"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 30000
+        }
+      },
+      "id": "node-linkedin-reply",
+      "name": "LinkedIn API - Post Comment",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [980, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://graph.facebook.com/v18.0/{{ $json.comment_id }}/replies",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "oAuth2Api",
+        "sendHeaders": true,
+        "headers": {
+          "headerParameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer {{ $json.access_token }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "message",
+              "value": "={{ $json.reply_text }}"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 30000
+        }
+      },
+      "id": "node-instagram-reply",
+      "name": "Instagram API - Post Reply",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [980, 420]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "condition-high-velocity",
+              "leftValue": "={{ $json.engagement_velocity }}",
+              "rightValue": "HIGH",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {}
+      },
+      "id": "node-if-viral",
+      "name": "If Breaking Out",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [1200, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $env.SLACK_WEBHOOK_URL }}",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "text",
+              "value": "=:raw"
+            },
+            {
+              "name": "attachments",
+              "value": "=[{\"color\":\"#ff0000\",\"title\":\"POST BREAKING OUT!\"},{\"title\":\"Platform\",\"text\":\"{{ $json.platform }}\"},{\"title\":\"Engagement\",\"text\":\"{{ $json.engagement_metrics }}\"},{\"title\":\"Action Needed\",\"text\":\"Manual engagement boost recommended. High velocity detected in first 2 hours.\"}]"
+            }
+          ]
+        }
+      },
+      "id": "node-slack-alert",
+      "name": "Slack - Viral Alert",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [1400, 300]
+    }
+  ],
+  "connections": {
+    "Schedule Trigger (Hourly)": {
+      "main": [
+        [
+          {
+            "node": "Supabase - Get Recent Published Posts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase - Get Recent Published Posts": {
+      "main": [
+        [
+          {
+            "node": "Twitter API - Get Tweet Metrics",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "LinkedIn API - Get Post Metrics",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Instagram API - Get Media Insights",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Twitter API - Get Tweet Metrics": {
+      "main": [
+        [
+          {
+            "node": "MiniMax - Generate Comment Reply",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "LinkedIn API - Get Post Metrics": {
+      "main": [
+        [
+          {
+            "node": "MiniMax - Generate Comment Reply",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Instagram API - Get Media Insights": {
+      "main": [
+        [
+          {
+            "node": "MiniMax - Generate Comment Reply",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "MiniMax - Generate Comment Reply": {
+      "main": [
+        [
+          {
+            "node": "Twitter API - Post Reply",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "LinkedIn API - Post Comment",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Instagram API - Post Reply",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Twitter API - Post Reply": {
+      "main": [
+        [
+          {
+            "node": "If Breaking Out",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If Breaking Out": {
+      "main": [
+        [
+          {
+            "node": "Slack - Viral Alert",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner",
+    "errorWorkflow": ""
+  },
+  "staticData": null,
+  "tags": ["distribution-agent", "engagement", "hourly"],
+  "meta": {
+    "templateCredsSetup": [
+      {
+        "name": "Supabase API",
+        "setup": "Configure with your Supabase project URL and service role key"
+      }
+    ],
+    "templateId": "distribution-agent"
+  }
+}

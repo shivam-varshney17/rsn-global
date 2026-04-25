@@ -1,0 +1,879 @@
+{
+  "name": "Weekly Content Batch Workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "week",
+              "hours": 18,
+              "triggerAtHour": true,
+              "dayOfWeek": "Sunday"
+            }
+          ]
+        }
+      },
+      "id": "node-schedule-trigger",
+      "name": "Schedule Trigger (Sunday 6PM)",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.1,
+      "position": [100, 300],
+      "webhookId": "weekly-content-batch"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{$env.NEXT_PUBLIC_SUPABASE_URL}}/functions/v1/generate/batch",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headers": {
+          "headerParameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer {{$env.SUPABASE_SERVICE_ROLE_KEY}}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "ideas",
+              "value": "={{ $json.ideas }}"
+            },
+            {
+              "name": "platforms",
+              "value": "[\"LINKEDIN\", \"TWITTER\", \"REDDIT\", \"INSTAGRAM\"]"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 120000
+        }
+      },
+      "id": "node-batch-generate",
+      "name": "HTTP Request - Batch Generate",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [320, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "condition-linkedin",
+              "leftValue": "={{ $json.platform }}",
+              "rightValue": "LINKEDIN",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {}
+      },
+      "id": "node-if-linkedin",
+      "name": "If LinkedIn",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [540, 100]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "condition-twitter",
+              "leftValue": "={{ $json.platform }}",
+              "rightValue": "TWITTER",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {}
+      },
+      "id": "node-if-twitter",
+      "name": "If Twitter",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [540, 220]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "condition-reddit",
+              "leftValue": "={{ $json.platform }}",
+              "rightValue": "REDDIT",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {}
+      },
+      "id": "node-if-reddit",
+      "name": "If Reddit",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [540, 340]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "condition-instagram",
+              "leftValue": "={{ $json.platform }}",
+              "rightValue": "INSTAGRAM",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {}
+      },
+      "id": "node-if-instagram",
+      "name": "If Instagram",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [540, 460]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.minimax.chat/v1/text/chatchat_completion",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "bearerAuth",
+        "sendHeaders": true,
+        "headers": {
+          "headerParameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer {{$env.MINIMAX_API_KEY}}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "model",
+              "value": "MiniMax-Text-01"
+            },
+            {
+              "name": "messages",
+              "value": "=[{\"role\":\"system\",\"content\":\"You are Aryan Mahajan. Write LinkedIn posts using em dashes, arrow bullets, hype adjectives, binary closers. Voice: confident, technical, authoritative. Use the Replacement Stack skeleton: 'This [thing] replaces your $[X] [role].'\"},{\"role\":\"user\",\"content\":\"Generate a LinkedIn post for: {{ $json.core_idea }}\"}]"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 30000
+        }
+      },
+      "id": "node-minimax-text-linkedin",
+      "name": "MiniMax Text - LinkedIn",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [760, 100]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.minimax.chat/v1/text/chatchat_completion",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "bearerAuth",
+        "sendHeaders": true,
+        "headers": {
+          "headerParameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer {{$env.MINIMAX_API_KEY}}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "model",
+              "value": "MiniMax-Text-01"
+            },
+            {
+              "name": "messages",
+              "value": "=[{\"role\":\"system\",\"content\":\"You write Twitter/X posts. Short, punchy, no arrow bullets, no emoji steps, no repost asks. Keep it under 280 chars or write a concise long-form post. Native Twitter voice.\"},{\"role\":\"user\",\"content\":\"Generate a Twitter post for: {{ $json.core_idea }}\"}]"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 30000
+        }
+      },
+      "id": "node-minimax-text-twitter",
+      "name": "MiniMax Text - Twitter",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [760, 220]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.minimax.chat/v1/text/chatchat_completion",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "bearerAuth",
+        "sendHeaders": true,
+        "headers": {
+          "headerParameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer {{$env.MINIMAX_API_KEY}}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "model",
+              "value": "MiniMax-Text-01"
+            },
+            {
+              "name": "messages",
+              "value": "=[{\"role\":\"system\",\"content\":\"You write Reddit posts. Anti-marketing, anti-hype. Plain English, first person, technical depth. No CTAs, no dollar signs in hooks. Lead with insight. Show your work. No voice signatures.\"},{\"role\":\"user\",\"content\":\"Generate a Reddit post for: {{ $json.core_idea }}\"}]"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 30000
+        }
+      },
+      "id": "node-minimax-text-reddit",
+      "name": "MiniMax Text - Reddit",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [760, 340]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.minimax.chat/v1/text/chatchat_completion",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "bearerAuth",
+        "sendHeaders": true,
+        "headers": {
+          "headerParameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer {{$env.MINIMAX_API_KEY}}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "model",
+              "value": "MiniMax-Text-01"
+            },
+            {
+              "name": "messages",
+              "value": "=[{\"role\":\"system\",\"content\":\"You write Instagram captions. Under 2200 chars, hook-first, 3-5 targeted hashtags, CTA keyword mechanic. Write in Aryan's voice with em dashes and arrow bullets.\"},{\"role\":\"user\",\"content\":\"Generate an Instagram caption for: {{ $json.core_idea }}\"}]"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 30000
+        }
+      },
+      "id": "node-minimax-text-instagram",
+      "name": "MiniMax Text - Instagram",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [760, 460]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.minimax.chat/v1/image",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "bearerAuth",
+        "sendHeaders": true,
+        "headers": {
+          "headerParameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer {{$env.MINIMAX_API_KEY}}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "prompt",
+              "value": "={{ $json.image_prompt || 'Professional dark tech background, subtle grid pattern, deep navy with electric blue accents, clean space for white text overlay, portrait 1080x1350, editorial quality' }}"
+            },
+            {
+              "name": "aspect_ratio",
+              "value": "3:4"
+            },
+            {
+              "name": "model",
+              "value": "image-01"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 60000
+        }
+      },
+      "id": "node-minimax-image-linkedin",
+      "name": "MiniMax Image - LinkedIn Carousel",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [980, 100]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.minimax.chat/v1/image",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "bearerAuth",
+        "sendHeaders": true,
+        "headers": {
+          "headerParameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer {{$env.MINIMAX_API_KEY}}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "prompt",
+              "value": "={{ $json.image_prompt || 'Bold gradient background, minimalist, social media ready, space for text overlay' }}"
+            },
+            {
+              "name": "aspect_ratio",
+              "value": "4:5"
+            },
+            {
+              "name": "model",
+              "value": "image-01"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 60000
+        }
+      },
+      "id": "node-minimax-image-instagram",
+      "name": "MiniMax Image - Instagram Carousel",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [980, 460]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.minimax.chat/v1/video/hailuo",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "bearerAuth",
+        "sendHeaders": true,
+        "headers": {
+          "headerParameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer {{$env.MINIMAX_API_KEY}}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "prompt",
+              "value": "={{ $json.video_prompt || 'Close-up of hands typing on a laptop with code on screen, soft blue lighting, cinematic, 4K quality' }}"
+            },
+            {
+              "name": "model",
+              "value": "MiniMax-Hailuo-2.3"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 120000
+        }
+      },
+      "id": "node-minimax-video-instagram",
+      "name": "MiniMax Video - Instagram Reels",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [1200, 460]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.minimax.chat/v1/speech/t2a",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "bearerAuth",
+        "sendHeaders": true,
+        "headers": {
+          "headerParameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer {{$env.MINIMAX_API_KEY}}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "text",
+              "value": "={{ $json.voiceover_text }}"
+            },
+            {
+              "name": "voice",
+              "value": "={{ $json.voice_id || 'adult_female_bright' }}"
+            },
+            {
+              "name": "model",
+              "value": "speech-02"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 60000
+        }
+      },
+      "id": "node-minimax-voiceover",
+      "name": "MiniMax Speech - Voiceover",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [1200, 520]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.minimax.chat/v1/music",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "bearerAuth",
+        "sendHeaders": true,
+        "headers": {
+          "headerParameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer {{$env.MINIMAX_API_KEY}}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "prompt",
+              "value": "={{ $json.music_prompt || 'Minimal tech beat, confident energy, subtle bass, clean production, 30-60 seconds' }}"
+            },
+            {
+              "name": "instrumental",
+              "value": true
+            },
+            {
+              "name": "model",
+              "value": "music-02"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 60000
+        }
+      },
+      "id": "node-minimax-music",
+      "name": "MiniMax Music - Background Track",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [1200, 580]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $env.N8N_WEBHOOK_URL }}/remotion/render",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "template_id",
+              "value": "={{ $json.template_id }}"
+            },
+            {
+              "name": "data",
+              "value": "={{ $json.remotion_data }}"
+            },
+            {
+              "name": "output_format",
+              "value": "mp4"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 180000
+        }
+      },
+      "id": "node-remotion-render",
+      "name": "Remotion - Render Video",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [1400, 460]
+    },
+    {
+      "parameters": {
+        "operation": "insert",
+        "table": "assets",
+        "columns": {
+          "assignments": [
+            {
+              "column": "content_piece_id",
+              "value": "={{ $json.content_piece_id }}"
+            },
+            {
+              "column": "type",
+              "value": "={{ $json.asset_type }}"
+            },
+            {
+              "column": "url",
+              "value": "={{ $json.asset_url }}"
+            },
+            {
+              "column": "metadata",
+              "value": "={{ $json.asset_metadata }}"
+            }
+          ]
+        }
+      },
+      "id": "node-supabase-insert-asset",
+      "name": "Supabase - Insert Asset",
+      "type": "n8n-nodes-supabase.supabase",
+      "typeVersion": 1,
+      "position": [1600, 460],
+      "credentials": {
+        "supabaseApi": {
+          "id": "supabase-credential",
+          "name": "Supabase API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "insert",
+        "table": "content_pieces",
+        "columns": {
+          "assignments": [
+            {
+              "column": "idea_id",
+              "value": "={{ $json.idea_id }}"
+            },
+            {
+              "column": "platform",
+              "value": "={{ $json.platform }}"
+            },
+            {
+              "column": "final_text",
+              "value": "={{ $json.final_text }}"
+            },
+            {
+              "column": "status",
+              "value": "REVIEW"
+            },
+            {
+              "column": "metadata",
+              "value": "={{ $json.metadata }}"
+            }
+          ]
+        }
+      },
+      "id": "node-supabase-insert-content-piece",
+      "name": "Supabase - Insert Content Piece",
+      "type": "n8n-nodes-supabase.supabase",
+      "typeVersion": 1,
+      "position": [1600, 300],
+      "credentials": {
+        "supabaseApi": {
+          "id": "supabase-credential",
+          "name": "Supabase API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $env.SLACK_WEBHOOK_URL }}",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "text",
+              "value": "=:raw"
+            },
+            {
+              "name": "attachments",
+              "value": "=[{\"color\":\"#36a64f\",\"title\":\"Weekly Content Batch Complete\",\"text\":\"Generated: {{ $json.posts_generated }} posts\\nPlatforms: LinkedIn, Twitter, Reddit, Instagram\\nStatus: Ready for review\"}]"
+            }
+          ]
+        }
+      },
+      "id": "node-slack-notification",
+      "name": "Slack - Batch Summary Notification",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [1800, 300]
+    }
+  ],
+  "connections": {
+    "Schedule Trigger (Sunday 6PM)": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request - Batch Generate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request - Batch Generate": {
+      "main": [
+        [
+          {
+            "node": "If LinkedIn",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "If Twitter",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "If Reddit",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "If Instagram",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If LinkedIn": {
+      "main": [
+        [
+          {
+            "node": "MiniMax Text - LinkedIn",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If Twitter": {
+      "main": [
+        [
+          {
+            "node": "MiniMax Text - Twitter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If Reddit": {
+      "main": [
+        [
+          {
+            "node": "MiniMax Text - Reddit",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If Instagram": {
+      "main": [
+        [
+          {
+            "node": "MiniMax Text - Instagram",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "MiniMax Text - LinkedIn": {
+      "main": [
+        [
+          {
+            "node": "MiniMax Image - LinkedIn Carousel",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "MiniMax Image - LinkedIn Carousel": {
+      "main": [
+        [
+          {
+            "node": "Supabase - Insert Content Piece",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "MiniMax Text - Twitter": {
+      "main": [
+        []
+      ]
+    },
+    "MiniMax Text - Reddit": {
+      "main": [
+        []
+      ]
+    },
+    "MiniMax Text - Instagram": {
+      "main": [
+        [
+          {
+            "node": "MiniMax Image - Instagram Carousel",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "MiniMax Image - Instagram Carousel": {
+      "main": [
+        [
+          {
+            "node": "MiniMax Video - Instagram Reels",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "MiniMax Video - Instagram Reels": {
+      "main": [
+        [
+          {
+            "node": "MiniMax Speech - Voiceover",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "MiniMax Speech - Voiceover": {
+      "main": [
+        [
+          {
+            "node": "MiniMax Music - Background Track",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "MiniMax Music - Background Track": {
+      "main": [
+        [
+          {
+            "node": "Remotion - Render Video",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Remotion - Render Video": {
+      "main": [
+        [
+          {
+            "node": "Supabase - Insert Asset",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase - Insert Content Piece": {
+      "main": [
+        [
+          {
+            "node": "Slack - Batch Summary Notification",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner",
+    "errorWorkflow": ""
+  },
+  "staticData": null,
+  "tags": ["content-production", "weekly-batch", "minimax"],
+  "meta": {
+    "templateCredsSetup": [
+      {
+        "name": "Supabase API",
+        "setup": "Configure with your Supabase project URL and service role key"
+      }
+    ],
+    "templateId": "weekly-content-batch"
+  }
+}

@@ -1,0 +1,579 @@
+{
+  "name": "Content Publishing Workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes",
+              "minutesInterval": 15
+            }
+          ]
+        }
+      },
+      "id": "node-schedule-trigger",
+      "name": "Schedule Trigger (Every 15 min)",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.1,
+      "position": [100, 300],
+      "webhookId": "content-publishing"
+    },
+    {
+      "parameters": {
+        "operation": "select",
+        "table": "scheduled_posts",
+        "columns": ["*"],
+        "filter": "status = 'PENDING' AND scheduled_for <= now()"
+      },
+      "id": "node-supabase-query",
+      "name": "Supabase - Get Pending Posts",
+      "type": "n8n-nodes-supabase.supabase",
+      "typeVersion": 1,
+      "position": [320, 300],
+      "credentials": {
+        "supabaseApi": {
+          "id": "supabase-credential",
+          "name": "Supabase API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "condition-pending",
+              "leftValue": "={{ $json.status }}",
+              "rightValue": "PENDING",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "node-if-pending",
+      "name": "If Post is Pending",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [540, 300]
+    },
+    {
+      "parameters": {
+        "operation": "select",
+        "table": "content_pieces",
+        "columns": ["*"],
+        "filter": "id = '{{ $json.content_piece_id }}'"
+      },
+      "id": "node-get-content-piece",
+      "name": "Supabase - Get Content Piece",
+      "type": "n8n-nodes-supabase.supabase",
+      "typeVersion": 1,
+      "position": [760, 300],
+      "credentials": {
+        "supabaseApi": {
+          "id": "supabase-credential",
+          "name": "Supabase API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "select",
+        "table": "platform_configs",
+        "columns": ["*"],
+        "filter": "platform = '{{ $json.platform }}'"
+      },
+      "id": "node-get-platform-config",
+      "name": "Supabase - Get Platform Config",
+      "type": "n8n-nodes-supabase.supabase",
+      "typeVersion": 1,
+      "position": [760, 420],
+      "credentials": {
+        "supabaseApi": {
+          "id": "supabase-credential",
+          "name": "Supabase API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "condition-linkedin",
+              "leftValue": "={{ $json.platform }}",
+              "rightValue": "LINKEDIN",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {}
+      },
+      "id": "node-if-platform-linkedin",
+      "name": "If LinkedIn",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [980, 180]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "condition-twitter",
+              "leftValue": "={{ $json.platform }}",
+              "rightValue": "TWITTER",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {}
+      },
+      "id": "node-if-platform-twitter",
+      "name": "If Twitter",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [980, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "condition-instagram",
+              "leftValue": "={{ $json.platform }}",
+              "rightValue": "INSTAGRAM",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {}
+      },
+      "id": "node-if-platform-instagram",
+      "name": "If Instagram",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [980, 420]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.linkedin.com/v2/ugcPosts",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "oAuth2Api",
+        "sendHeaders": true,
+        "headers": {
+          "headerParameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer {{ $json.access_token }}"
+            },
+            {
+              "name": "X-Restli-Protocol-Version",
+              "value": "2.0.0"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "author",
+              "value": "urn:li:person:{{ $json.author_id }}"
+            },
+            {
+              "name": "lifecycleState",
+              "value": "PUBLISHED"
+            },
+            {
+              "name": "specificContent",
+              "value": "={\"com.linkedin.ugc.ShareContent\":{\"shareCommentary\":{\"text\":\"{{ $json.final_text }}\"},\"shareMediaCategory\":\"IMAGE\",\"media\":[{\"status\":\"READY\",\"originalUrl\":\"{{ $json.media_url }}\"}]}}"
+            },
+            {
+              "name": "visibility",
+              "value": "{\"com.linkedin.ugc.MemberNetworkVisibility\":\"PUBLIC\"}"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 30000
+        }
+      },
+      "id": "node-linkedin-post",
+      "name": "LinkedIn API - Publish Post",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [1200, 180]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.twitter.com/2/tweets",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "oAuth2Api",
+        "sendHeaders": true,
+        "headers": {
+          "headerParameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer {{ $json.access_token }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "text",
+              "value": "={{ $json.final_text }}"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 30000
+        }
+      },
+      "id": "node-twitter-post",
+      "name": "Twitter API - Tweet",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [1200, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://graph.facebook.com/v18.0/{{ $json.instagram_account_id }}/media",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "oAuth2Api",
+        "sendHeaders": true,
+        "headers": {
+          "headerParameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer {{ $json.access_token }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "image_url",
+              "value": "={{ $json.media_url }}"
+            },
+            {
+              "name": "caption",
+              "value": "={{ $json.final_text }}"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 30000
+        }
+      },
+      "id": "node-instagram-post",
+      "name": "Instagram API - Post Media",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [1200, 420]
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "table": "scheduled_posts",
+        "filter": "id = '{{ $json.scheduled_post_id }}'",
+        "columns": {
+          "assignments": [
+            {
+              "column": "status",
+              "value": "PUBLISHED"
+            },
+            {
+              "column": "published_at",
+              "value": "=now()"
+            },
+            {
+              "column": "external_post_id",
+              "value": "={{ $json.external_post_id }}"
+            }
+          ]
+        }
+      },
+      "id": "node-update-scheduled-post",
+      "name": "Supabase - Update Scheduled Post",
+      "type": "n8n-nodes-supabase.supabase",
+      "typeVersion": 1,
+      "position": [1400, 300],
+      "credentials": {
+        "supabaseApi": {
+          "id": "supabase-credential",
+          "name": "Supabase API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "table": "content_pieces",
+        "filter": "id = '{{ $json.content_piece_id }}'",
+        "columns": {
+          "assignments": [
+            {
+              "column": "status",
+              "value": "PUBLISHED"
+            }
+          ]
+        }
+      },
+      "id": "node-update-content-piece",
+      "name": "Supabase - Update Content Piece",
+      "type": "n8n-nodes-supabase.supabase",
+      "typeVersion": 1,
+      "position": [1400, 420],
+      "credentials": {
+        "supabaseApi": {
+          "id": "supabase-credential",
+          "name": "Supabase API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://oauth.reddit.com/api/submit",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "oAuth2Api",
+        "sendHeaders": true,
+        "headers": {
+          "headerParameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer {{ $json.access_token }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "title",
+              "value": "={{ $json.title }}"
+            },
+            {
+              "name": "text",
+              "value": "={{ $json.final_text }}"
+            },
+            {
+              "name": "sr",
+              "value": "={{ $json.subreddit }}"
+            },
+            {
+              "name": "kind",
+              "value": "self"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 30000
+        }
+      },
+      "id": "node-reddit-post",
+      "name": "Reddit API - Submit Post",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [1200, 540]
+    }
+  ],
+  "connections": {
+    "Schedule Trigger (Every 15 min)": {
+      "main": [
+        [
+          {
+            "node": "Supabase - Get Pending Posts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase - Get Pending Posts": {
+      "main": [
+        [
+          {
+            "node": "If Post is Pending",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If Post is Pending": {
+      "main": [
+        [
+          {
+            "node": "Supabase - Get Content Piece",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Supabase - Get Platform Config",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase - Get Content Piece": {
+      "main": [
+        [
+          {
+            "node": "If LinkedIn",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "If Twitter",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "If Instagram",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If LinkedIn": {
+      "main": [
+        [
+          {
+            "node": "LinkedIn API - Publish Post",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If Twitter": {
+      "main": [
+        [
+          {
+            "node": "Twitter API - Tweet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If Instagram": {
+      "main": [
+        [
+          {
+            "node": "Instagram API - Post Media",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "LinkedIn API - Publish Post": {
+      "main": [
+        [
+          {
+            "node": "Supabase - Update Scheduled Post",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Twitter API - Tweet": {
+      "main": [
+        [
+          {
+            "node": "Supabase - Update Scheduled Post",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Instagram API - Post Media": {
+      "main": [
+        [
+          {
+            "node": "Supabase - Update Scheduled Post",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase - Update Scheduled Post": {
+      "main": [
+        [
+          {
+            "node": "Supabase - Update Content Piece",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner",
+    "errorWorkflow": ""
+  },
+  "staticData": null,
+  "tags": ["content-publishing", "auto-publish", "scheduling"],
+  "meta": {
+    "templateCredsSetup": [
+      {
+        "name": "Supabase API",
+        "setup": "Configure with your Supabase project URL and service role key"
+      }
+    ],
+    "templateId": "content-publishing"
+  }
+}
