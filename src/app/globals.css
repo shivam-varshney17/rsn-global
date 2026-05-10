@@ -698,6 +698,10 @@ body {
   .rsn-nav-links { display: none; }
 }
 
+/* desktop default — show long labels, hide short */
+.nav-btn-long { display: inline; }
+.nav-btn-short { display: none; }
+
 /* ============================================================
    PORTAL — wholesale operating console (members-only)
    ============================================================ */
@@ -973,9 +977,20 @@ body {
   }
 
   /* nav */
-  .rsn-nav-row { height: 60px; }
-  .rsn-nav-row .rsn-btn { padding: 10px 14px; font-size: 11px; letter-spacing: 0.04em; }
-  .rsn-nav-row .rsn-btn-ghost { display: none; }
+  .rsn-nav-row { height: 60px; gap: 8px; }
+  .rsn-nav-row .rsn-btn {
+    padding: 9px 12px;
+    font-size: 11px;
+    letter-spacing: 0.03em;
+    min-height: 38px;
+  }
+  /* keep ghost (portal) button visible on phones */
+  .rsn-nav-row .rsn-btn-ghost { display: inline-flex; }
+  /* hide "RSN Club" wordmark on mobile to free space for the portal link */
+  .rsn-nav-row .rsn-logo span:not(.rsn-logo-mark) { display: none; }
+  /* compact text via CSS truncation rules */
+  .rsn-nav-row .nav-btn-long { display: none; }
+  .rsn-nav-row .nav-btn-short { display: inline; }
 
   /* eyebrow */
   .rsn-eyebrow { font-size: 10px; }

@@ -20,17 +20,20 @@ export function Navbar({ onApply }: { onApply: () => void }) {
           <a className="rsn-nav-link" href="#operations">{t("Operations", "运营")}</a>
           <a className="rsn-nav-link" href="#rollout">{t("Rollout", "推进路径")}</a>
         </nav>
-        <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
+        <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
           <LangToggle />
           <Link
             href="/portal"
             className="rsn-btn rsn-btn-ghost"
             style={{ textDecoration: "none" }}
           >
-            {t("Member Portal", "会员入口")} <ArrowUpRight size={12} />
+            <span className="nav-btn-long">{t("Member Portal", "会员入口")}</span>
+            <span className="nav-btn-short">{t("Portal", "入口")}</span>
+            <ArrowUpRight size={12} />
           </Link>
           <button className="rsn-btn rsn-btn-primary" onClick={onApply}>
-            {t("Apply for Membership", "申请会员资格")}
+            <span className="nav-btn-long">{t("Apply for Membership", "申请会员资格")}</span>
+            <span className="nav-btn-short">{t("Apply", "申请")}</span>
           </button>
         </div>
       </div>
