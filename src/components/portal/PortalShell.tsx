@@ -66,6 +66,7 @@ export function PortalShell({
             <span style={{ fontSize: 14 }}>RSN Club</span>
           </Link>
           <span
+            className="portal-subtitle"
             style={{
               fontSize: 11,
               letterSpacing: "0.18em",
@@ -139,6 +140,7 @@ export function PortalShell({
             <Bell size={14} />
           </button>
           <div
+            className="portal-member-chip"
             style={{
               display: "flex",
               alignItems: "center",

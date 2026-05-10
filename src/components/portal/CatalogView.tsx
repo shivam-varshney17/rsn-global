@@ -312,31 +312,22 @@ function FilterRow({
 }) {
   const t = useT();
   return (
-    <div
-      className="portal-filter-scroll"
-      style={{ display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap" }}
-    >
-      <span
-        style={{
-          fontSize: 10,
-          letterSpacing: "0.18em",
-          textTransform: "uppercase",
-          color: "var(--rsn-muted)",
-          width: 70,
-          flexShrink: 0,
-        }}
+    <div className="portal-filter-row">
+      <span className="portal-filter-label">{label}</span>
+      <div
+        className="portal-filter-scroll"
+        style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap", minWidth: 0 }}
       >
-        {label}
-      </span>
-      {items.map((it) => (
-        <button
-          key={it}
-          onClick={() => onChange(it)}
-          className={`portal-filter ${value === it ? "active" : ""}`}
-        >
-          {t(it, dict[it] ?? it)}
-        </button>
-      ))}
+        {items.map((it) => (
+          <button
+            key={it}
+            onClick={() => onChange(it)}
+            className={`portal-filter ${value === it ? "active" : ""}`}
+          >
+            {t(it, dict[it] ?? it)}
+          </button>
+        ))}
+      </div>
     </div>
   );
 }

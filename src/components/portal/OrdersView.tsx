@@ -160,7 +160,7 @@ export function OrdersView() {
               </button>
 
               {open && (
-                <div style={{ padding: "0 22px 22px 50px", display: "flex", flexDirection: "column", gap: 18 }}>
+                <div className="portal-order-detail" style={{ padding: "0 22px 22px 50px", display: "flex", flexDirection: "column", gap: 18 }}>
                   {/* lines */}
                   <div
                     style={{
@@ -173,6 +173,7 @@ export function OrdersView() {
                       return (
                         <div
                           key={l.sku}
+                          className="portal-line-row"
                           style={{
                             display: "grid",
                             gridTemplateColumns: "1fr auto auto auto",
@@ -222,6 +223,7 @@ export function OrdersView() {
 
                   {/* breakdown */}
                   <div
+                    className="portal-order-detail-grid"
                     style={{
                       display: "grid",
                       gridTemplateColumns: "repeat(4, 1fr)",
@@ -316,6 +318,7 @@ function StatusTimeline({
         {t("Order timeline", "订单进度")}
       </div>
       <div
+        className="portal-status-timeline"
         style={{
           display: "grid",
           gridTemplateColumns: `repeat(${STATUS_FLOW.length}, 1fr)`,
@@ -327,7 +330,7 @@ function StatusTimeline({
         {STATUS_FLOW.map((s, i) => {
           const passed = i <= idx;
           return (
-            <div key={s} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 8 }}>
+            <div key={s} className="portal-timeline-step" style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 8, minWidth: 0 }}>
               <span
                 style={{
                   width: 10,
@@ -335,9 +338,11 @@ function StatusTimeline({
                   borderRadius: "50%",
                   background: passed ? "var(--rsn-emerald)" : "var(--rsn-bg-2)",
                   border: `1px solid ${passed ? "var(--rsn-emerald)" : "var(--rsn-border-2)"}`,
+                  flexShrink: 0,
                 }}
               />
               <span
+                className="portal-timeline-label"
                 style={{
                   fontSize: 10,
                   color: passed ? "var(--rsn-text)" : "var(--rsn-muted)",

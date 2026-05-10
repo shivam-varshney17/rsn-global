@@ -47,6 +47,7 @@ export function AccountView() {
 
       {/* identity card */}
       <div
+        className="acc-identity"
         style={{
           border: "1px solid var(--rsn-border)",
           background: "var(--rsn-surface)",
