@@ -20,6 +20,18 @@ import {
   type PortalProduct,
 } from "@/data/portal";
 import { useT } from "@/lib/lang";
+import {
+  PRODUCT_NAME,
+  PRODUCT_DESC,
+  PRODUCT_CATEGORY,
+  SPEC_KEY,
+  SPEC_VAL,
+  SUPPLIER_NAME,
+  SUPPLIER_SPEC,
+  SHIP_CLASS,
+  CITY,
+  tr,
+} from "@/lib/translations";
 
 export function ProductDetailDrawer({
   sku,
@@ -99,7 +111,9 @@ export function ProductDetailDrawer({
             >
               {product.sku}
             </div>
-            <div style={{ fontSize: 14, color: "var(--rsn-text)" }}>{product.name}</div>
+            <div style={{ fontSize: 14, color: "var(--rsn-text)" }}>
+              {tr(product.name, PRODUCT_NAME, t)}
+            </div>
           </div>
           <button
             aria-label="Close"
@@ -185,7 +199,7 @@ export function ProductDetailDrawer({
               </span>
               <span className="rsn-chip">
                 <Globe size={11} color="var(--rsn-muted)" />
-                {product.sourceRegion}
+                {tr(product.sourceRegion, CITY, t)}
               </span>
               <span className="rsn-chip">
                 <TrendingUp size={11} color="var(--rsn-gold)" />
@@ -193,7 +207,7 @@ export function ProductDetailDrawer({
               </span>
               <span className="rsn-chip">
                 <Clock size={11} color="var(--rsn-muted)" />
-                {product.shippingClass}
+                {tr(product.shippingClass, SHIP_CLASS, t)}
               </span>
             </div>
             <p
@@ -204,7 +218,7 @@ export function ProductDetailDrawer({
                 margin: 0,
               }}
             >
-              {product.description}
+              {t(product.description, PRODUCT_DESC[product.sku] ?? product.description)}
             </p>
           </div>
 
@@ -404,7 +418,9 @@ export function ProductDetailDrawer({
                 >
                   {freightRates.map((r) => (
                     <option key={r.shippingClass} value={r.shippingClass}>
-                      {r.shippingClass} · {r.durationDays[0]}–{r.durationDays[1]}d · ${r.perUnit.toFixed(2)}/u
+                      {tr(r.shippingClass, SHIP_CLASS, t)} · {r.durationDays[0]}–
+                      {r.durationDays[1]}{t("d", "天")} · ${r.perUnit.toFixed(2)}
+                      {t("/u", "/件")}
                     </option>
                   ))}
                 </select>
@@ -518,7 +534,7 @@ export function ProductDetailDrawer({
                     }}
                   >
                     <span style={{ fontSize: 14, color: "var(--rsn-text)" }}>
-                      {supplier.name}
+                      {tr(supplier.name, SUPPLIER_NAME, t)}
                     </span>
                     {supplier.verified && (
                       <span className="rsn-chip rsn-chip-emerald">
@@ -535,7 +551,7 @@ export function ProductDetailDrawer({
                       flexWrap: "wrap",
                     }}
                   >
-                    <span>{supplier.region}</span>
+                    <span>{tr(supplier.region, CITY, t)}</span>
                     <span>·</span>
                     <span>{t(`${supplier.yearsActive} years active`, `${supplier.yearsActive} 年运营`)}</span>
                     <span>·</span>
@@ -552,7 +568,8 @@ export function ProductDetailDrawer({
                       marginTop: 4,
                     }}
                   >
-                    {t("Specialties", "专长")}: {supplier.specialties.join(" · ")}
+                    {t("Specialties", "专长")}:{" "}
+                    {supplier.specialties.map((s) => tr(s, SUPPLIER_SPEC, t)).join(" · ")}
                   </div>
                 </div>
               </div>
@@ -584,8 +601,12 @@ export function ProductDetailDrawer({
                     fontSize: 13,
                   }}
                 >
-                  <span style={{ color: "var(--rsn-muted)" }}>{s.k}</span>
-                  <span style={{ color: "var(--rsn-text)" }}>{s.v}</span>
+                  <span style={{ color: "var(--rsn-muted)" }}>
+                    {tr(s.k, SPEC_KEY, t)}
+                  </span>
+                  <span style={{ color: "var(--rsn-text)" }}>
+                    {tr(s.v, SPEC_VAL, t)}
+                  </span>
                 </div>
               ))}
             </div>

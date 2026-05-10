@@ -4,6 +4,7 @@ import { ArrowUpRight, Activity, Globe, Layers, Users } from "lucide-react";
 import { AreaLineChart, Sparkline } from "./Charts";
 import { heroDashboardMetrics, revenueSeries, shipments } from "@/data/rsn";
 import { useT } from "@/lib/lang";
+import { CUSTOMS, translateRoute, tr } from "@/lib/translations";
 
 export function Hero({
   onApply,
@@ -373,10 +374,11 @@ function HeroDashboardCard({ sparkValues }: { sparkValues: number[] }) {
                   fontVariantNumeric: "tabular-nums",
                 }}
               >
-                {s.id} · {s.route}
+                {s.id} · {translateRoute(s.route, t)}
               </div>
               <div style={{ fontSize: 11, color: "var(--rsn-muted)", marginTop: 2 }}>
-                {t("ETA", "预计")} {s.expectedDelivery} · {s.customsStage}
+                {t("ETA", "预计")} {s.expectedDelivery} ·{" "}
+                {tr(s.customsStage, CUSTOMS, t)}
               </div>
             </div>
             <span
@@ -388,7 +390,17 @@ function HeroDashboardCard({ sparkValues }: { sparkValues: number[] }) {
                   : "rsn-chip-gold"
               }`}
             >
-              {s.status}
+              {t(
+                s.status,
+                {
+                  Dispatched: "已发运",
+                  "In Transit": "在途",
+                  "At Customs": "清关中",
+                  Cleared: "已清关",
+                  Delivered: "已送达",
+                  "On Hold": "暂缓",
+                }[s.status] ?? s.status
+              )}
             </span>
           </div>
         ))}

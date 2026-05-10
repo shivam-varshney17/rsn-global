@@ -4,6 +4,7 @@ import { useState } from "react";
 import { ChevronRight } from "lucide-react";
 import { portalOrders, portalProducts } from "@/data/portal";
 import { useT } from "@/lib/lang";
+import { PAYMENT, FULFILLMENT, PRODUCT_NAME, tr } from "@/lib/translations";
 
 const STATUS_DICT: Record<string, string> = {
   Draft: "草稿",
@@ -123,11 +124,11 @@ export function OrdersView() {
                     <span>·</span>
                     <span>{t(`${o.lines.length} line${o.lines.length === 1 ? "" : "s"}`, `${o.lines.length} 项`)}</span>
                     <span>·</span>
-                    <span>{o.fulfillment}</span>
+                    <span>{tr(o.fulfillment, FULFILLMENT, t)}</span>
                     <span className="order-meta-mobile-only">·</span>
                     <span className="order-meta-mobile-only">{t("ETA", "预计")} {o.eta}</span>
                     <span className="order-meta-mobile-only">·</span>
-                    <span className="order-meta-mobile-only">{o.payment}</span>
+                    <span className="order-meta-mobile-only">{tr(o.payment, PAYMENT, t)}</span>
                   </div>
                 </div>
                 <span
@@ -140,7 +141,7 @@ export function OrdersView() {
                   className="rsn-mono order-meta-pay"
                   style={{ fontSize: 11, color: "var(--rsn-muted)" }}
                 >
-                  {o.payment}
+                  {tr(o.payment, PAYMENT, t)}
                 </span>
                 <span
                   className={`rsn-chip order-chip ${
@@ -195,7 +196,7 @@ export function OrdersView() {
                               {l.sku}
                             </span>
                             <span style={{ marginLeft: 10, color: "var(--rsn-text)" }}>
-                              {p?.name ?? l.sku}
+                              {p ? tr(p.name, PRODUCT_NAME, t) : l.sku}
                             </span>
                           </div>
                           <span

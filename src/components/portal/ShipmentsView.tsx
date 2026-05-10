@@ -3,6 +3,16 @@
 import { useState } from "react";
 import { portalShipments, type PortalShipment } from "@/data/portal";
 import { useT } from "@/lib/lang";
+import {
+  CITY,
+  CARRIER,
+  CUSTOMS,
+  EVENT_STAGE,
+  EVENT_LOC,
+  tr,
+  translateRoute,
+  translateCityPair,
+} from "@/lib/translations";
 
 const SHIP_STATUS: Record<string, string> = {
   Booked: "已预订",
@@ -94,7 +104,7 @@ export function ShipmentsView() {
                     {s.id}
                   </span>
                   <span style={{ fontSize: 13, color: "var(--rsn-text)" }}>
-                    {s.route}
+                    {translateRoute(s.route, t)}
                   </span>
                 </div>
                 <div
@@ -106,7 +116,7 @@ export function ShipmentsView() {
                     flexWrap: "wrap",
                   }}
                 >
-                  <span>{s.carrier}</span>
+                  <span>{tr(s.carrier, CARRIER, t)}</span>
                   <span>·</span>
                   <span>{t("ETA", "预计")} {s.expectedDelivery}</span>
                   <span>·</span>
@@ -181,7 +191,7 @@ function ShipmentDetail({
           className="rsn-serif"
           style={{ fontSize: 22, letterSpacing: "-0.02em", fontWeight: 300 }}
         >
-          {s.route}
+          {translateRoute(s.route, t)}
         </div>
       </div>
 
@@ -206,7 +216,7 @@ function ShipmentDetail({
         }}
       >
         {[
-          { k: t("Carrier", "承运方"), v: s.carrier },
+          { k: t("Carrier", "承运方"), v: tr(s.carrier, CARRIER, t) },
           { k: t("Container / Vessel", "集装箱 / 船次"), v: s.containerId ?? s.vessel ?? "—" },
           { k: t("Volume", "体积"), v: `${s.cbm} CBM` },
           { k: t("Weight", "重量"), v: `${s.weightKg.toLocaleString("en-US")} kg` },
@@ -277,8 +287,8 @@ function ShipmentDetail({
               <div className="rsn-tabular" style={{ fontSize: 11, color: "var(--rsn-muted)" }}>
                 {e.ts}
               </div>
-              <div style={{ fontSize: 13, color: "var(--rsn-text)" }}>{e.stage}</div>
-              <div style={{ fontSize: 11, color: "var(--rsn-muted)" }}>{e.location}</div>
+              <div style={{ fontSize: 13, color: "var(--rsn-text)" }}>{tr(e.stage, EVENT_STAGE, t)}</div>
+              <div style={{ fontSize: 11, color: "var(--rsn-muted)" }}>{tr(e.location, EVENT_LOC, t)}</div>
             </li>
           ))}
         </ol>
@@ -308,8 +318,8 @@ function RouteLine({
   return (
     <div>
       <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 8, fontSize: 11, color: "var(--rsn-muted)" }}>
-        <span>{origin}</span>
-        <span>{destination}</span>
+        <span>{translateCityPair(origin, t)}</span>
+        <span>{translateCityPair(destination, t)}</span>
       </div>
       <svg viewBox="0 0 360 24" width="100%" height="24">
         <defs>

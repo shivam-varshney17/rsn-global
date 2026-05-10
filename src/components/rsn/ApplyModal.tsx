@@ -2,6 +2,7 @@
 
 import { X, ArrowUpRight, Lock } from "lucide-react";
 import { useEffect, useState } from "react";
+import { useT } from "@/lib/lang";
 
 export function ApplyModal({
   open,
@@ -12,6 +13,7 @@ export function ApplyModal({
   onClose: () => void;
   variant?: "membership" | "founding";
 }) {
+  const t = useT();
   const [submitted, setSubmitted] = useState(false);
 
   useEffect(() => {
@@ -48,7 +50,9 @@ export function ApplyModal({
                   marginBottom: 10,
                 }}
               >
-                {isFounding ? "FOUNDING MEMBERSHIP" : "MEMBERSHIP APPLICATION"}
+                {isFounding
+                  ? t("FOUNDING MEMBERSHIP", "创始会员")
+                  : t("MEMBERSHIP APPLICATION", "会员申请")}
               </div>
               <h3
                 className="rsn-serif"
@@ -58,7 +62,9 @@ export function ApplyModal({
                   letterSpacing: "-0.012em",
                 }}
               >
-                {isFounding ? "Founding access enquiry." : "Begin your application."}
+                {isFounding
+                  ? t("Founding access enquiry.", "创始通道申请。")
+                  : t("Begin your application.", "开始会员申请。")}
               </h3>
             </div>
             <button
@@ -90,8 +96,10 @@ export function ApplyModal({
                   marginBottom: 24,
                 }}
               >
-                Membership is reviewed by RSN Operations within five business days.
-                Submitting this form does not constitute admission.
+                {t(
+                  "Membership is reviewed by RSN Operations within five business days. Submitting this form does not constitute admission.",
+                  "会员资格将由 RSN 运营团队在五个工作日内审核。提交此表单不代表已获录取。"
+                )}
               </p>
 
               <form
@@ -102,33 +110,51 @@ export function ApplyModal({
                 style={{ display: "flex", flexDirection: "column", gap: 16 }}
               >
                 <div>
-                  <label className="rsn-label">Full Name</label>
-                  <input className="rsn-input" required placeholder="Your name" />
+                  <label className="rsn-label">{t("Full Name", "姓名")}</label>
+                  <input
+                    className="rsn-input"
+                    required
+                    placeholder={t("Your name", "您的姓名")}
+                  />
                 </div>
                 <div>
-                  <label className="rsn-label">Business Name</label>
-                  <input className="rsn-input" required placeholder="Registered entity" />
+                  <label className="rsn-label">{t("Business Name", "企业名称")}</label>
+                  <input
+                    className="rsn-input"
+                    required
+                    placeholder={t("Registered entity", "工商注册主体")}
+                  />
                 </div>
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
                   <div>
-                    <label className="rsn-label">City</label>
-                    <input className="rsn-input" required placeholder="Kathmandu" />
+                    <label className="rsn-label">{t("City", "城市")}</label>
+                    <input
+                      className="rsn-input"
+                      required
+                      placeholder={t("Kathmandu", "加德满都")}
+                    />
                   </div>
                   <div>
-                    <label className="rsn-label">Buyer Type</label>
+                    <label className="rsn-label">{t("Buyer Type", "买家类型")}</label>
                     <select className="rsn-input" required defaultValue="">
-                      <option value="" disabled>Select</option>
-                      <option>Retailer</option>
-                      <option>TikTok Seller</option>
-                      <option>Daraz Seller</option>
-                      <option>Bulk Buyer</option>
-                      <option>Regional Wholesaler</option>
+                      <option value="" disabled>{t("Select", "请选择")}</option>
+                      <option>{t("Retailer", "零售商")}</option>
+                      <option>{t("TikTok Seller", "TikTok 卖家")}</option>
+                      <option>{t("Daraz Seller", "Daraz 卖家")}</option>
+                      <option>{t("Bulk Buyer", "大宗买家")}</option>
+                      <option>{t("Regional Wholesaler", "区域批发商")}</option>
                     </select>
                   </div>
                 </div>
                 <div>
-                  <label className="rsn-label">Estimated Monthly Procurement (USD)</label>
-                  <input className="rsn-input" required placeholder="e.g. 25,000" />
+                  <label className="rsn-label">
+                    {t("Estimated Monthly Procurement (USD)", "预计月度采购金额(美元)")}
+                  </label>
+                  <input
+                    className="rsn-input"
+                    required
+                    placeholder={t("e.g. 25,000", "例如 25,000")}
+                  />
                 </div>
 
                 <div
@@ -142,7 +168,12 @@ export function ApplyModal({
                   }}
                 >
                   <Lock size={12} />
-                  <span>Confidential. Reviewed only by RSN Operations.</span>
+                  <span>
+                    {t(
+                      "Confidential. Reviewed only by RSN Operations.",
+                      "信息保密,仅由 RSN 运营团队审核。"
+                    )}
+                  </span>
                 </div>
 
                 <button
@@ -150,7 +181,7 @@ export function ApplyModal({
                   className="rsn-btn rsn-btn-primary"
                   style={{ marginTop: 12 }}
                 >
-                  Submit for Review <ArrowUpRight size={14} />
+                  {t("Submit for Review", "提交审核")} <ArrowUpRight size={14} />
                 </button>
               </form>
             </>
@@ -177,7 +208,7 @@ export function ApplyModal({
                 className="rsn-serif"
                 style={{ fontSize: 22, marginBottom: 10, letterSpacing: "-0.01em" }}
               >
-                Submission received.
+                {t("Submission received.", "申请已收到。")}
               </h4>
               <p
                 style={{
@@ -188,11 +219,13 @@ export function ApplyModal({
                   margin: "0 auto 24px",
                 }}
               >
-                Operations will respond within five business days. Please monitor
-                the email associated with your business registration.
+                {t(
+                  "Operations will respond within five business days. Please monitor the email associated with your business registration.",
+                  "运营团队将在五个工作日内回复。请留意您工商注册时所登记的邮箱。"
+                )}
               </p>
               <button className="rsn-btn rsn-btn-ghost" onClick={onClose}>
-                Close
+                {t("Close", "关闭")}
               </button>
             </div>
           )}

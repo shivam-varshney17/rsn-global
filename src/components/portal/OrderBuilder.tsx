@@ -3,6 +3,7 @@
 import { Trash2, ArrowUpRight, Wallet } from "lucide-react";
 import { computeLanded, portalProducts } from "@/data/portal";
 import { useT } from "@/lib/lang";
+import { PRODUCT_NAME, SHIP_CLASS, tr } from "@/lib/translations";
 
 export interface CartLine {
   sku: string;
@@ -158,7 +159,7 @@ export function OrderBuilder({
                     marginBottom: 6,
                   }}
                 >
-                  {e.product.name}
+                  {tr(e.product.name, PRODUCT_NAME, t)}
                 </div>
                 <div
                   className="rsn-tabular"
@@ -174,7 +175,7 @@ export function OrderBuilder({
                   <span>·</span>
                   <span>${e.line.unitPrice.toFixed(2)}{t("/u", "/件")}</span>
                   <span>·</span>
-                  <span>{e.product.shippingClass}</span>
+                  <span>{tr(e.product.shippingClass, SHIP_CLASS, t)}</span>
                 </div>
               </div>
               <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 6 }}>

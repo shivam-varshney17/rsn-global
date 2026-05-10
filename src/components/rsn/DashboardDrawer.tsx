@@ -4,6 +4,8 @@ import { X } from "lucide-react";
 import { useEffect } from "react";
 import { members } from "@/data/rsn";
 import { Sparkline } from "./Charts";
+import { useT } from "@/lib/lang";
+import { CITY, MEMBER_TYPE, MEMBER_TIER, tr } from "@/lib/translations";
 
 export function DashboardDrawer({
   open,
@@ -12,6 +14,7 @@ export function DashboardDrawer({
   open: boolean;
   onClose: () => void;
 }) {
+  const t = useT();
   useEffect(() => {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
@@ -47,10 +50,10 @@ export function DashboardDrawer({
                 marginBottom: 6,
               }}
             >
-              ADMIN PREVIEW · MEMBERS
+              {t("ADMIN PREVIEW · MEMBERS", "管理预览 · 会员")}
             </div>
             <div className="rsn-serif" style={{ fontSize: 20 }}>
-              Member Directory
+              {t("Member Directory", "会员名册")}
             </div>
           </div>
           <button
@@ -86,10 +89,10 @@ export function DashboardDrawer({
             }}
           >
             {[
-              { k: "Active", v: "1,284" },
-              { k: "Pending", v: "12" },
-              { k: "GMV / member", v: "$8,940" },
-              { k: "Renewal Rate", v: "94%" },
+              { k: t("Active", "活跃"), v: "1,284" },
+              { k: t("Pending", "待审核"), v: "12" },
+              { k: t("GMV / member", "人均 GMV"), v: "$8,940" },
+              { k: t("Renewal Rate", "续费率"), v: "94%" },
             ].map((m) => (
               <div
                 key={m.k}
@@ -162,11 +165,11 @@ export function DashboardDrawer({
                       flexWrap: "wrap",
                     }}
                   >
-                    <span>{m.city}</span>
+                    <span>{tr(m.city, CITY, t)}</span>
                     <span>·</span>
-                    <span>{m.type}</span>
+                    <span>{tr(m.type, MEMBER_TYPE, t)}</span>
                     <span>·</span>
-                    <span>Owner {m.accountOwner}</span>
+                    <span>{t("Owner", "客户经理")} {m.accountOwner}</span>
                   </div>
                 </div>
                 <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 4 }}>
@@ -179,7 +182,7 @@ export function DashboardDrawer({
                         : ""
                     }`}
                   >
-                    {m.tier}
+                    {tr(m.tier, MEMBER_TIER, t)}
                   </span>
                   <span
                     className="rsn-mono rsn-tabular"
@@ -209,7 +212,7 @@ export function DashboardDrawer({
                 marginBottom: 12,
               }}
             >
-              90-day spend trajectory
+              {t("90-day spend trajectory", "近 90 天采购趋势")}
             </div>
             <Sparkline
               values={[31, 42, 38, 56, 62, 71, 68, 79, 88, 92, 96, 104]}

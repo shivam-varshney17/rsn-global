@@ -5,6 +5,15 @@ import { ArrowUpRight, AlertTriangle, CircleCheck, Info, Bell } from "lucide-rea
 import { SectionHeader } from "./SectionHeader";
 import { useT } from "@/lib/lang";
 import {
+  CITY,
+  CARRIER,
+  CUSTOMS,
+  PRODUCT_CATEGORY,
+  SUPPLIER_NAME,
+  translateRoute,
+  tr,
+} from "@/lib/translations";
+import {
   AreaLineChart,
   MultiLineChart,
   BarRows,
@@ -239,7 +248,7 @@ export function ExecutiveDashboard({ onOpenDrawer }: { onOpenDrawer: () => void 
                       }}
                     >
                       <span style={{ fontSize: 13, color: "var(--rsn-text)" }}>
-                        {ins.category}
+                        {tr(ins.category, PRODUCT_CATEGORY, t)}
                       </span>
                       <span
                         className="rsn-mono"
@@ -249,7 +258,7 @@ export function ExecutiveDashboard({ onOpenDrawer }: { onOpenDrawer: () => void 
                           letterSpacing: "0.04em",
                         }}
                       >
-                        {ins.growthPrediction}
+                        {translateGrowth(ins.growthPrediction, t)}
                       </span>
                     </div>
                     <div
@@ -260,7 +269,7 @@ export function ExecutiveDashboard({ onOpenDrawer }: { onOpenDrawer: () => void 
                         lineHeight: 1.5,
                       }}
                     >
-                      {ins.recommendedAction}
+                      {translateAction(ins.recommendedAction, t)}
                     </div>
                     <div
                       style={{
@@ -270,7 +279,7 @@ export function ExecutiveDashboard({ onOpenDrawer }: { onOpenDrawer: () => void 
                         flexWrap: "wrap",
                       }}
                     >
-                      <span className="rsn-chip">{ins.region}</span>
+                      <span className="rsn-chip">{translateRegion(ins.region, t)}</span>
                       <span
                         className={`rsn-chip ${
                           ins.supplyRisk === "Low"
@@ -280,7 +289,12 @@ export function ExecutiveDashboard({ onOpenDrawer }: { onOpenDrawer: () => void 
                             : "rsn-chip-gold"
                         }`}
                       >
-                        Risk · {ins.supplyRisk}
+                        {t("Risk", "风险")} ·{" "}
+                        {ins.supplyRisk === "Low"
+                          ? t("Low", "低")
+                          : ins.supplyRisk === "Elevated"
+                          ? t("Elevated", "偏高")
+                          : t("Moderate", "中等")}
                       </span>
                     </div>
                   </div>
@@ -391,10 +405,10 @@ export function ExecutiveDashboard({ onOpenDrawer }: { onOpenDrawer: () => void 
               <table className="rsn-table">
                 <thead>
                   <tr>
-                    <th>Order</th>
-                    <th>Member</th>
-                    <th>Value</th>
-                    <th>Status</th>
+                    <th>{t("Order", "订单")}</th>
+                    <th>{t("Member", "会员")}</th>
+                    <th>{t("Value", "金额")}</th>
+                    <th>{t("Status", "状态")}</th>
                   </tr>
                 </thead>
                 <tbody className="rsn-tabular">
@@ -437,23 +451,27 @@ export function ExecutiveDashboard({ onOpenDrawer }: { onOpenDrawer: () => void 
               <table className="rsn-table">
                 <thead>
                   <tr>
-                    <th>Supplier</th>
-                    <th>Region</th>
-                    <th>Lead</th>
-                    <th>Quality</th>
+                    <th>{t("Supplier", "供应商")}</th>
+                    <th>{t("Region", "区域")}</th>
+                    <th>{t("Lead", "交期")}</th>
+                    <th>{t("Quality", "质量")}</th>
                   </tr>
                 </thead>
                 <tbody className="rsn-tabular">
                   {suppliers.map((s) => (
                     <tr key={s.id}>
                       <td>
-                        <div style={{ color: "var(--rsn-text)" }}>{s.name}</div>
+                        <div style={{ color: "var(--rsn-text)" }}>
+                          {tr(s.name, SUPPLIER_NAME, t)}
+                        </div>
                         <div style={{ fontSize: 11, color: "var(--rsn-muted)" }}>
-                          {s.category}
+                          {tr(s.category, PRODUCT_CATEGORY, t)}
                         </div>
                       </td>
-                      <td style={{ color: "var(--rsn-text-2)" }}>{s.region}</td>
-                      <td>{s.leadTimeDays}d</td>
+                      <td style={{ color: "var(--rsn-text-2)" }}>
+                        {tr(s.region, CITY, t)}
+                      </td>
+                      <td>{s.leadTimeDays}{t("d", "天")}</td>
                       <td>
                         <span
                           className={`rsn-chip ${
@@ -572,12 +590,13 @@ export function ExecutiveDashboard({ onOpenDrawer }: { onOpenDrawer: () => void 
                     </span>
                     <div>
                       <div style={{ fontSize: 13, color: "var(--rsn-text)" }}>
-                        {s.route}
+                        {translateRoute(s.route, t)}
                       </div>
                       <div
                         style={{ fontSize: 11, color: "var(--rsn-muted)", marginTop: 2 }}
                       >
-                        ETA {s.expectedDelivery} · {s.customsStage}
+                        {t("ETA", "预计")} {s.expectedDelivery} ·{" "}
+                        {tr(s.customsStage, CUSTOMS, t)}
                       </div>
                     </div>
                     <span
@@ -647,6 +666,24 @@ function translateAlert(s: string, t: (en: string, zh: string) => string) {
 
 function translateRegion(s: string, t: (en: string, zh: string) => string) {
   return t(s, REGION_DICT[s] ?? s);
+}
+
+/** "+18% next 30 days" → "未来 30 天 +18%" */
+function translateGrowth(s: string, t: (en: string, zh: string) => string) {
+  const m = s.match(/^([+\-]\d+%)\s+next\s+(\d+)\s+days$/);
+  if (m) return t(s, `未来 ${m[2]} 天 ${m[1]}`);
+  return s;
+}
+
+const ACTION_DICT: Record<string, string> = {
+  "Pre-position 2× MOQ in Kathmandu DC": "在加德满都仓预置 2 倍起订量",
+  "Diversify away from single Shenzhen supplier": "避免单一深圳供应商,分散采购",
+  "Open private-label window with Pearl River": "与珠江工厂开启自有品牌窗口",
+  "Hold buying — monitor cotton index two weeks": "暂停采购,观察棉花指数两周",
+};
+
+function translateAction(s: string, t: (en: string, zh: string) => string) {
+  return t(s, ACTION_DICT[s] ?? s);
 }
 
 const METRIC_DICT: Record<string, string> = {
@@ -745,16 +782,17 @@ function PanelHeader({
 
 /** Simplified route diagram — China origins → Nepal/India destinations */
 function RouteVisualization() {
+  const t = useT();
   const origins = [
-    { x: 60, y: 60, label: "Guangzhou" },
-    { x: 60, y: 120, label: "Shenzhen" },
-    { x: 60, y: 180, label: "Yiwu" },
+    { x: 60, y: 60, label: tr("Guangzhou", CITY, t) },
+    { x: 60, y: 120, label: tr("Shenzhen", CITY, t) },
+    { x: 60, y: 180, label: tr("Yiwu", CITY, t) },
   ];
   const dests = [
-    { x: 360, y: 50, label: "Kathmandu" },
-    { x: 360, y: 100, label: "Pokhara" },
-    { x: 360, y: 150, label: "Birgunj" },
-    { x: 360, y: 200, label: "Delhi NCR" },
+    { x: 360, y: 50, label: tr("Kathmandu", CITY, t) },
+    { x: 360, y: 100, label: tr("Pokhara", CITY, t) },
+    { x: 360, y: 150, label: tr("Birgunj", CITY, t) },
+    { x: 360, y: 200, label: tr("Delhi NCR", CITY, t) },
   ];
 
   return (
@@ -775,7 +813,7 @@ function RouteVisualization() {
           marginBottom: 14,
         }}
       >
-        ROUTE TOPOLOGY
+        {t("ROUTE TOPOLOGY", "通路拓扑")}
       </div>
       <svg viewBox="0 0 420 240" width="100%" height="auto">
         <defs>

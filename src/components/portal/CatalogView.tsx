@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import { Sparkles, ArrowUpRight, ShieldCheck, TrendingUp } from "lucide-react";
 import { portalProducts, portalAIInsights, type PortalProduct } from "@/data/portal";
 import { useT } from "@/lib/lang";
+import { PRODUCT_NAME, PRODUCT_CATEGORY, CITY, tr } from "@/lib/translations";
 
 const CATEGORIES = [
   "All",
@@ -18,21 +19,13 @@ const CATEGORIES = [
 
 const CATEGORY_ZH: Record<string, string> = {
   All: "全部",
-  "Mobile Accessories": "手机配件",
-  "Electronics Accessories": "电子配件",
-  "Beauty Tools": "美妆工具",
-  "Home Utility": "家居日用",
-  "Fashion Basics": "服饰基础款",
-  "Small Appliances": "小家电",
-  "Packaging Supplies": "包装耗材",
+  ...PRODUCT_CATEGORY,
 };
 
 const REGIONS = ["All", "Shenzhen", "Guangzhou", "Yiwu"];
 const REGION_ZH: Record<string, string> = {
   All: "全部",
-  Shenzhen: "深圳",
-  Guangzhou: "广州",
-  Yiwu: "义乌",
+  ...CITY,
 };
 
 export function CatalogView({ onSelect }: { onSelect: (sku: string) => void }) {
@@ -410,7 +403,7 @@ function ProductCard({ p, onClick }: { p: PortalProduct; onClick: () => void }) 
             className="rsn-mono"
             style={{ fontSize: 10, color: "var(--rsn-muted)", marginBottom: 6 }}
           >
-            {p.sku} · {p.sourceRegion}
+            {p.sku} · {tr(p.sourceRegion, CITY, t)}
           </div>
           <h3
             style={{
@@ -422,7 +415,7 @@ function ProductCard({ p, onClick }: { p: PortalProduct; onClick: () => void }) 
               letterSpacing: "-0.01em",
             }}
           >
-            {p.name}
+            {tr(p.name, PRODUCT_NAME, t)}
           </h3>
           <div style={{ fontSize: 11, color: "var(--rsn-muted)" }}>
             {t(p.category, CATEGORY_ZH[p.category] ?? p.category)}

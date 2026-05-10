@@ -3,13 +3,9 @@
 import { Headphones, FileBadge, Building2 } from "lucide-react";
 import { currentMember } from "@/data/portal";
 import { useT } from "@/lib/lang";
+import { CITY, MEMBER_TIER, tr, translateCityPair } from "@/lib/translations";
 
-const TIER_ZH: Record<string, string> = {
-  Founding: "创始",
-  Platinum: "铂金",
-  Gold: "金",
-  Standard: "标准",
-};
+const TIER_ZH: Record<string, string> = MEMBER_TIER;
 
 export function AccountView() {
   const t = useT();
@@ -89,7 +85,8 @@ export function AccountView() {
               letterSpacing: "0.06em",
             }}
           >
-            {currentMember.id} · {t("Joined", "入会日期")} {currentMember.joinedDate} · {currentMember.city}
+            {currentMember.id} · {t("Joined", "入会日期")} {currentMember.joinedDate} ·{" "}
+            {translateCityPair(currentMember.city, t)}
           </div>
           <div
             style={{
@@ -189,11 +186,11 @@ export function AccountView() {
                 color: "var(--rsn-gold)",
               }}
             >
-              Credit Line
+              {t("Credit Line", "授信额度")}
             </span>
           </div>
           <div style={{ fontSize: 11, color: "var(--rsn-muted)", marginBottom: 6 }}>
-            Used
+            {t("Used", "已使用")}
           </div>
           <div
             className="rsn-serif rsn-tabular"
@@ -202,7 +199,10 @@ export function AccountView() {
             ${currentMember.creditUsed.toLocaleString("en-US")}
           </div>
           <div className="rsn-tabular" style={{ fontSize: 12, color: "var(--rsn-muted)", marginBottom: 18 }}>
-            of ${currentMember.creditLine.toLocaleString("en-US")} approved
+            {t(
+              `of $${currentMember.creditLine.toLocaleString("en-US")} approved`,
+              `已核准额度 $${currentMember.creditLine.toLocaleString("en-US")}`
+            )}
           </div>
           <div
             style={{
@@ -229,8 +229,8 @@ export function AccountView() {
               justifyContent: "space-between",
             }}
           >
-            <span>{credit.toFixed(0)}% used</span>
-            <span>Reset · 2026-12-31</span>
+            <span>{t(`${credit.toFixed(0)}% used`, `已使用 ${credit.toFixed(0)}%`)}</span>
+            <span>{t("Reset · 2026-12-31", "重置 · 2026-12-31")}</span>
           </div>
         </article>
 
@@ -262,12 +262,14 @@ export function AccountView() {
                 color: "var(--rsn-gold)",
               }}
             >
-              Concierge
+              {t("Concierge", "专属服务")}
             </span>
           </div>
           <div style={{ fontSize: 13, color: "var(--rsn-text-2)", lineHeight: 1.6, marginBottom: 14 }}>
-            Direct line to your account owner and the operations desk for sourcing,
-            allocation, and customs queries.
+            {t(
+              "Direct line to your account owner and the operations desk for sourcing, allocation, and customs queries.",
+              "直接对接客户经理与运营台,处理采购、分货与清关相关事项。"
+            )}
           </div>
           <div
             style={{
@@ -281,18 +283,18 @@ export function AccountView() {
             }}
           >
             <div style={{ display: "flex", justifyContent: "space-between" }}>
-              <span style={{ color: "var(--rsn-muted)" }}>Owner</span>
+              <span style={{ color: "var(--rsn-muted)" }}>{t("Owner", "客户经理")}</span>
               <span>{currentMember.accountOwner}</span>
             </div>
             <div style={{ display: "flex", justifyContent: "space-between", marginTop: 4 }}>
-              <span style={{ color: "var(--rsn-muted)" }}>Channel</span>
+              <span style={{ color: "var(--rsn-muted)" }}>{t("Channel", "频道")}</span>
               <span className="rsn-mono" style={{ fontSize: 11 }}>
                 {currentMember.conciergeChannel}
               </span>
             </div>
           </div>
           <button className="rsn-btn rsn-btn-ghost" style={{ marginTop: "auto" }}>
-            Open Concierge
+            {t("Open Concierge", "打开专属服务")}
           </button>
         </article>
       </div>
@@ -323,7 +325,7 @@ export function AccountView() {
                 color: "var(--rsn-gold)",
               }}
             >
-              Business Profile
+              {t("Business Profile", "企业档案")}
             </span>
           </div>
           <div
@@ -334,12 +336,30 @@ export function AccountView() {
             }}
           >
             {[
-              { k: "Channels", v: "Daraz · Storefronts · TikTok" },
-              { k: "Markets", v: "Kathmandu Valley · Pokhara" },
-              { k: "Categories", v: "Mobile · Home · Beauty" },
-              { k: "Procurement Cycle", v: "Bi-weekly" },
-              { k: "Avg Order Size", v: "$24.6K" },
-              { k: "Renewal", v: "2026-11-04" },
+              {
+                k: t("Channels", "渠道"),
+                v: t("Daraz · Storefronts · TikTok", "Daraz · 实体店 · TikTok"),
+              },
+              {
+                k: t("Markets", "市场"),
+                v: t("Kathmandu Valley · Pokhara", "加德满都谷地 · 博卡拉"),
+              },
+              {
+                k: t("Categories", "品类"),
+                v: t("Mobile · Home · Beauty", "手机配件 · 家居 · 美妆"),
+              },
+              {
+                k: t("Procurement Cycle", "采购周期"),
+                v: t("Bi-weekly", "每两周"),
+              },
+              {
+                k: t("Avg Order Size", "平均订单金额"),
+                v: "$24.6K",
+              },
+              {
+                k: t("Renewal", "续期日期"),
+                v: "2026-11-04",
+              },
             ].map((m) => (
               <div key={m.k}>
                 <div
