@@ -159,7 +159,7 @@ function getVoiceRulesForPlatform(platform: Platform, skeleton: SkeletonName): s
   if (voiceRules.use_unicode_bold) rules += '- Use Unicode bold for emphasis\n'
   if (voiceRules.hype_adjective_count) rules += `- Use ${voiceRules.hype_adjective_count} hype adjective(s) max\n`
   if (voiceRules.use_binary_closer) rules += '- End with a binary closer\n'
-  if (voiceRules.use_positioning_flip) rules += '- Use positioning flip: "This isn't X. It's Y."\n'
+  if (voiceRules.use_positioning_flip) rules += '- Use positioning flip: "This isn\'t X. It\'s Y."\n'
   if (voiceRules.use_triads) rules += '- Use triads for rhythm\n'
   if (voiceRules.use_repost_ask) rules += '- Include a repost ask at the end\n'
   if (voiceRules.use_scarcity_tail) rules += '- Use scarcity tail sparingly\n'

@@ -1,40 +1,45 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { JetBrains_Mono } from "next/font/google";
 import "./globals.css";
-import { Sidebar } from "@/components/layout/Sidebar";
-import { TopBar } from "@/components/layout/TopBar";
+import { LangProvider } from "@/lib/lang";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const jetbrains = JetBrains_Mono({
+  variable: "--font-jetbrains",
   subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+  weight: ["400", "500"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "Content Production System",
-  description: "Multi-platform content production engine with AI-powered content generation",
+  title: "RSN Club — Private Wholesale Institution",
+  description:
+    "The digital growth arm of RSLOG's South Asia Distribution Network. China sourcing authority, cross-border logistics, members-only wholesale, and AI operations — one institutional platform.",
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
-      <body className="min-h-screen bg-background text-foreground antialiased">
-        <div className="app-layout">
-          <Sidebar />
-          <div className="main-content">
-            <TopBar />
-            <main className="page-container">
-              {children}
-            </main>
-          </div>
+    <html lang="en">
+      <body>
+        <div className={`rsn-root ${jetbrains.variable}`}>
+          <style>{`
+            html, body { background: #FAFAF7; margin: 0; padding: 0; }
+            .rsn-root {
+              font-family: 'Helvetica Neue', Helvetica, 'Arial Nova', Arial, 'PingFang SC', 'Microsoft YaHei', 'Liberation Sans', sans-serif;
+              -webkit-font-smoothing: antialiased;
+              -moz-osx-font-smoothing: grayscale;
+            }
+            .rsn-serif,
+            .rsn-display {
+              font-family: 'Helvetica Neue', Helvetica, 'Arial Nova', Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+              font-weight: 300;
+            }
+            .rsn-mono {
+              font-family: var(--font-jetbrains), ui-monospace, monospace;
+            }
+          `}</style>
+          <LangProvider>{children}</LangProvider>
         </div>
       </body>
     </html>

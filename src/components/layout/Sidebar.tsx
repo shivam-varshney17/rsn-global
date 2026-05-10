@@ -38,6 +38,8 @@ export function Sidebar() {
   const [isOpen, setIsOpen] = useState(false);
   const [isCollapsed, setIsCollapsed] = useState(false);
 
+  if (pathname?.startsWith("/rsn")) return null;
+
   return (
     <>
       {/* Mobile hamburger button */}

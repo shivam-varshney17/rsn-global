@@ -1,10 +1,15 @@
 "use client";
 
 import { Bell, Plus, ChevronDown } from "lucide-react";
+import { usePathname } from "next/navigation";
 import { useState } from "react";
 
 export function TopBar() {
+  const pathname = usePathname();
   const [notificationCount] = useState(3);
+
+  if (pathname?.startsWith("/rsn")) return null;
+
   const today = new Date();
   const dateStr = today.toLocaleDateString("en-US", {
     weekday: "long",

@@ -1,76 +1,52 @@
-import { fetchPipelineMetrics } from '@/components/dashboard/types';
-import { StatsRow } from '@/components/dashboard/StatsRow';
-import { PipelineOverview } from '@/components/dashboard/PipelineOverview';
-import { PlatformActivityGrid } from '@/components/dashboard/PlatformActivityGrid';
-import { WeeklyCalendarStrip } from '@/components/dashboard/WeeklyCalendarStrip';
-import { RecentIdeasFeed } from '@/components/dashboard/RecentIdeasFeed';
+"use client";
 
-// Force dynamic rendering since we're fetching data
-export const dynamic = 'force-dynamic';
+import { useState } from "react";
+import { Navbar } from "@/components/rsn/Navbar";
+import { Hero } from "@/components/rsn/Hero";
+import { PillarsSection } from "@/components/rsn/PillarsSection";
+import { ArchitectureSection } from "@/components/rsn/ArchitectureSection";
+import { DeliverySection } from "@/components/rsn/DeliverySection";
+import { MembershipSection } from "@/components/rsn/MembershipSection";
+import { ExecutiveDashboard } from "@/components/rsn/ExecutiveDashboard";
+import { TimelineSection } from "@/components/rsn/TimelineSection";
+import { CTASection } from "@/components/rsn/CTASection";
+import { Footer } from "@/components/rsn/Footer";
+import { ApplyModal } from "@/components/rsn/ApplyModal";
+import { DashboardDrawer } from "@/components/rsn/DashboardDrawer";
 
-export default async function DashboardPage() {
-  const metrics = await fetchPipelineMetrics();
+export default function RsnHome() {
+  const [applyOpen, setApplyOpen] = useState(false);
+  const [applyVariant, setApplyVariant] = useState<"membership" | "founding">("membership");
+  const [drawerOpen, setDrawerOpen] = useState(false);
+
+  const openApply = (variant: "membership" | "founding" = "membership") => {
+    setApplyVariant(variant);
+    setApplyOpen(true);
+  };
+
+  const scrollToOverview = () => {
+    document.querySelector("#platform")?.scrollIntoView({ behavior: "smooth" });
+  };
 
   return (
-    <div className="space-y-8">
-      {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-semibold text-foreground">
-            Content Dashboard
-          </h1>
-          <p className="mt-1 text-sm text-text-secondary">
-            Multi-platform content production overview
-          </p>
-        </div>
-      </div>
+    <main>
+      <Navbar onApply={() => openApply("membership")} />
+      <Hero onApply={() => openApply("membership")} onOverview={scrollToOverview} />
+      <PillarsSection />
+      <ArchitectureSection />
+      <DeliverySection />
+      <MembershipSection onApply={() => openApply("founding")} />
+      <ExecutiveDashboard onOpenDrawer={() => setDrawerOpen(true)} />
+      <TimelineSection />
+      <CTASection onApply={() => openApply("founding")} />
+      <Footer />
 
-      {/* Section 1: Stats Row */}
-      <section>
-        <h2 className="mb-4 text-sm font-medium uppercase tracking-wider text-text-muted">
-          Overview
-        </h2>
-        <StatsRow
-          totalIdeas={metrics.totalIdeasThisWeek}
-          contentInPipeline={metrics.contentInPipeline}
-          scheduledThisWeek={metrics.scheduledThisWeek}
-          publishedThisWeek={metrics.publishedThisWeek}
-        />
-      </section>
-
-      {/* Section 2: Pipeline Overview */}
-      <section>
-        <h2 className="mb-4 text-sm font-medium uppercase tracking-wider text-text-muted">
-          Pipeline
-        </h2>
-        <PipelineOverview pipelineByStage={metrics.pipelineByStage} />
-      </section>
-
-      {/* Section 3: Platform Activity Grid */}
-      <section>
-        <h2 className="mb-4 text-sm font-medium uppercase tracking-wider text-text-muted">
-          Platform Activity
-        </h2>
-        <PlatformActivityGrid platformMetrics={metrics.platformMetrics} />
-      </section>
-
-      {/* Section 4: Weekly Calendar Strip */}
-      <section>
-        <h2 className="mb-4 text-sm font-medium uppercase tracking-wider text-text-muted">
-          This Week
-        </h2>
-        <div className="rounded-xl border border-border bg-surface p-4">
-          <WeeklyCalendarStrip weeklyCalendar={metrics.weeklyCalendar} />
-        </div>
-      </section>
-
-      {/* Section 5: Recent Ideas Feed */}
-      <section>
-        <h2 className="mb-4 text-sm font-medium uppercase tracking-wider text-text-muted">
-          Recent Ideas
-        </h2>
-        <RecentIdeasFeed ideas={metrics.recentIdeas} />
-      </section>
-    </div>
+      <ApplyModal
+        open={applyOpen}
+        onClose={() => setApplyOpen(false)}
+        variant={applyVariant}
+      />
+      <DashboardDrawer open={drawerOpen} onClose={() => setDrawerOpen(false)} />
+    </main>
   );
 }
