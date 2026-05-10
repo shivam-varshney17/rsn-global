@@ -273,7 +273,7 @@ export function CatalogView({ onSelect }: { onSelect: (sku: string) => void }) {
       </section>
 
       {/* product grid */}
-      <section className="catalog-grid-wrap" style={{ padding: "24px 32px 64px" }}>
+      <section className="catalog-grid-wrap portal-grid" style={{ padding: "24px 32px 64px" }}>
         <div
           style={{
             display: "grid",

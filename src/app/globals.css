@@ -1252,4 +1252,257 @@ body {
 .rsn-root .rsn-glow { max-width: none; }
 body, html { overflow-x: hidden; }
 
+/* ============================================================
+   Modern responsive enhancements
+   ============================================================ */
+
+/* fluid headings — let the browser balance display lines */
+.rsn-section-title,
+.rsn-serif {
+  text-wrap: balance;
+}
+p, .rsn-text-pretty {
+  text-wrap: pretty;
+}
+
+/* scroll-snap on horizontal filter rows */
+.portal-filter-scroll {
+  scroll-snap-type: x proximity;
+  scroll-padding-inline: 18px;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+}
+.portal-filter-scroll > .portal-filter {
+  scroll-snap-align: start;
+}
+
+/* allow grid items to shrink below content min size */
+.portal-product-card,
+.portal-card,
+.rsn-card { min-width: 0; }
+
+/* iOS-safe full viewport */
+.rsn-root {
+  height: 100dvh;
+  height: 100vh;
+  height: -webkit-fill-available;
+}
+@supports (height: 100dvh) {
+  .rsn-root { height: 100dvh; }
+}
+
+/* lock touch behavior on tappable buttons */
+.rsn-btn, .portal-filter, .portal-mobile-nav-item, .portal-nav-item {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* horizontally scrollable table wrapper */
+.scroll-table {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+}
+.scroll-table > table { min-width: max-content; }
+@media (max-width: 768px) {
+  .scroll-table {
+    margin-inline: -16px;
+    padding-inline: 16px;
+  }
+}
+
+/* mobile bottom sheet — for the cart */
+.cart-fab {
+  display: none;
+  position: fixed;
+  left: 16px;
+  right: 16px;
+  bottom: 80px;
+  z-index: 40;
+  background: var(--rsn-text);
+  color: var(--rsn-bg);
+  padding: 14px 20px;
+  border-radius: 4px;
+  border: none;
+  font-family: inherit;
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  box-shadow: 0 16px 40px -12px rgba(20, 20, 20, 0.35);
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.cart-fab:hover { background: var(--rsn-gold); }
+@media (max-width: 1100px) {
+  .cart-fab { display: flex; }
+}
+
+.cart-sheet-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(20, 20, 20, 0.42);
+  backdrop-filter: blur(4px);
+  z-index: 70;
+  animation: rsn-fade 0.2s ease;
+}
+.cart-sheet {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  max-height: 88dvh;
+  max-height: 88vh;
+  background: var(--rsn-surface);
+  border-top: 1px solid var(--rsn-border);
+  border-radius: 12px 12px 0 0;
+  z-index: 80;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  animation: cart-sheet-up 0.28s cubic-bezier(0.2, 0.7, 0.2, 1);
+  padding-bottom: env(safe-area-inset-bottom, 0);
+}
+@keyframes cart-sheet-up {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+.cart-sheet-handle {
+  width: 36px;
+  height: 4px;
+  border-radius: 999px;
+  background: var(--rsn-border-2);
+  margin: 10px auto 0;
+  flex-shrink: 0;
+}
+
+/* container queries for product cards (graceful degrade if unsupported) */
+@supports (container-type: inline-size) {
+  .portal-grid {
+    container-type: inline-size;
+  }
+}
+
+/* better drawer scrolling on iOS */
+.rsn-drawer { -webkit-overflow-scrolling: touch; }
+
+/* additional tablet adjustments */
+@media (max-width: 1024px) {
+  .rsn-route-row { grid-template-columns: 1fr !important; }
+  .rsn-arch-row { grid-template-columns: 1fr !important; }
+  .rsn-arch-row > div:first-child {
+    border-right: none !important;
+    border-bottom: 1px solid var(--rsn-border);
+  }
+}
+
+/* delivery card: stack on small screens */
+@media (max-width: 640px) {
+  .rsn-card .delivery-row {
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
+  }
+  .rsn-card .delivery-row .delivery-icon { margin-bottom: 2px; }
+  .rsn-card .delivery-row .delivery-status { justify-self: start; }
+  .rsn-card .delivery-row .delivery-meta {
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
+  }
+}
+
+/* MOQ tier row stacks more gracefully on small screens */
+@media (max-width: 480px) {
+  .moq-row {
+    grid-template-columns: auto 1fr auto !important;
+    gap: 12px !important;
+  }
+  .moq-row .moq-savings { display: none; }
+}
+
+/* supplier card on mobile */
+@media (max-width: 480px) {
+  .supplier-card {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
+  .supplier-card .supplier-icon { margin-bottom: 2px; }
+}
+
+/* spec rows vertical on mobile */
+@media (max-width: 480px) {
+  .spec-row {
+    grid-template-columns: 1fr !important;
+    gap: 4px !important;
+    padding-block: 10px !important;
+  }
+}
+
+/* hero stat trust strip */
+@media (max-width: 480px) {
+  .hero-trust { grid-template-columns: 1fr !important; gap: 14px !important; }
+}
+
+/* footer single col on phones */
+@media (max-width: 520px) {
+  .rsn-footer-cols { grid-template-columns: 1fr !important; }
+}
+
+/* better SVG charts on phones */
+@media (max-width: 480px) {
+  .rsn-section .rsn-card svg,
+  .portal-card svg { font-size: 9px; }
+}
+
+/* membership step list — tighter padding mobile */
+@media (max-width: 768px) {
+  .rsn-membership-grid ol li { padding-bottom: 28px !important; }
+}
+
+/* timeline cards more compact */
+@media (max-width: 768px) {
+  .rsn-timeline-grid article .rsn-card { padding: 18px !important; }
+}
+
+/* dashboard panels tighter on mobile */
+@media (max-width: 768px) {
+  .rsn-dash-row-1 > div,
+  .rsn-dash-row-2 > div,
+  .rsn-dash-row-3 > div { padding: 18px !important; }
+}
+
+/* hero card metric padding tighter on small screens */
+@media (max-width: 380px) {
+  .hero-dashcard-metric { padding: 14px 16px !important; }
+  .hero-dashcard-metric .rsn-serif { font-size: 22px !important; }
+}
+
+/* drawer footer CTAs stack + config grid stacks on phones */
+@media (max-width: 480px) {
+  .drawer-cta {
+    flex-direction: column !important;
+    gap: 10px !important;
+  }
+  .drawer-cta > button { width: 100%; }
+  .drawer-config {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
+}
+
+/* qty stepper tighter on mobile */
+@media (max-width: 480px) {
+  .qty-stepper input { font-size: 14px !important; padding: 8px 10px !important; }
+}
+
+/* delivery aside metrics on mobile */
+@media (max-width: 1024px) {
+  .rsn-delivery-grid > aside { position: static !important; }
+}
+
+/* prevent the moq tier price column from being too narrow */
+.moq-row > :last-child { min-width: 64px; text-align: right; }
+
+/* tier label always visible */
+.moq-row > :first-child { flex-shrink: 0; }
+
 

@@ -238,6 +238,7 @@ export function ProductDetailDrawer({
                   <button
                     key={mt.qty}
                     onClick={() => setQty(mt.qty)}
+                    className="moq-row"
                     style={{
                       display: "grid",
                       gridTemplateColumns: "auto 1fr auto auto",
@@ -282,7 +283,7 @@ export function ProductDetailDrawer({
                       </div>
                     </div>
                     <span
-                      className="rsn-tabular"
+                      className="rsn-tabular moq-savings"
                       style={{
                         fontSize: 11,
                         color: "var(--rsn-emerald)",
@@ -354,6 +355,7 @@ export function ProductDetailDrawer({
             <SectionTitle>{t("Configure & landed cost", "配置与到岸总价")}</SectionTitle>
 
             <div
+              className="drawer-config"
               style={{
                 display: "grid",
                 gridTemplateColumns: "1fr 1fr",
@@ -500,6 +502,7 @@ export function ProductDetailDrawer({
             <section>
               <SectionTitle>{t("Supplier transparency", "供应商透明度")}</SectionTitle>
               <div
+                className="supplier-card"
                 style={{
                   border: "1px solid var(--rsn-border)",
                   borderRadius: 4,
@@ -512,6 +515,7 @@ export function ProductDetailDrawer({
                 }}
               >
                 <div
+                  className="supplier-icon"
                   style={{
                     width: 44,
                     height: 44,
@@ -589,6 +593,7 @@ export function ProductDetailDrawer({
               {product.specs.map((s, i) => (
                 <div
                   key={s.k}
+                  className="spec-row"
                   style={{
                     display: "grid",
                     gridTemplateColumns: "180px 1fr",
@@ -614,6 +619,7 @@ export function ProductDetailDrawer({
 
           {/* CTA */}
           <div
+            className="drawer-cta"
             style={{
               display: "flex",
               gap: 12,

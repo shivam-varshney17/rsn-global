@@ -5,6 +5,7 @@ import { PortalShell, type PortalTab } from "@/components/portal/PortalShell";
 import { CatalogView } from "@/components/portal/CatalogView";
 import { ProductDetailDrawer } from "@/components/portal/ProductDetailDrawer";
 import { OrderBuilder, type CartLine } from "@/components/portal/OrderBuilder";
+import { CartFab } from "@/components/portal/CartFab";
 import { OrdersView } from "@/components/portal/OrdersView";
 import { ShipmentsView } from "@/components/portal/ShipmentsView";
 import { QuotesView } from "@/components/portal/QuotesView";
@@ -77,6 +78,24 @@ export default function PortalPage() {
         onClose={() => setDrawerOpen(false)}
         onAdd={addToCart}
       />
+
+      {/* Mobile-only cart access — visible whenever member is on the catalog tab and has lines */}
+      {tab === "catalog" && (
+        <CartFab
+          lines={cart}
+          onRemove={removeFromCart}
+          onClear={() => setCart([])}
+          onSubmit={() => {
+            alert(
+              t(
+                "Order submitted for allocation. Operations will respond within 1 business hour.",
+                "订单已提交分货。运营团队将在 1 个工作小时内回复。"
+              )
+            );
+            setCart([]);
+          }}
+        />
+      )}
     </>
   );
 }

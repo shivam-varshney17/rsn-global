@@ -110,6 +110,7 @@ export function Hero({
 
             {/* trust strip */}
             <div
+              className="hero-trust"
               style={{
                 marginTop: 56,
                 paddingTop: 28,
@@ -233,6 +234,7 @@ function HeroDashboardCard({ sparkValues }: { sparkValues: number[] }) {
           return (
             <div
               key={m.label}
+              className="hero-dashcard-metric"
               style={{
                 padding: "20px 22px",
                 borderRight: i % 2 === 0 ? "1px solid var(--rsn-border)" : "none",

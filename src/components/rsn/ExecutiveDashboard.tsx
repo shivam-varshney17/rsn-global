@@ -402,7 +402,7 @@ export function ExecutiveDashboard({ onOpenDrawer }: { onOpenDrawer: () => void 
               <div style={{ padding: "0 28px" }}>
                 <PanelHeader title={t("Recent Orders", "近期订单")} subtitle={t("Live fulfillment activity", "实时履约动态")} tag={t("6 active", "6 项进行中")} />
               </div>
-              <table className="rsn-table">
+              <div className="scroll-table"><table className="rsn-table">
                 <thead>
                   <tr>
                     <th>{t("Order", "订单")}</th>
@@ -435,7 +435,7 @@ export function ExecutiveDashboard({ onOpenDrawer }: { onOpenDrawer: () => void 
                     </tr>
                   ))}
                 </tbody>
-              </table>
+              </table></div>
             </div>
 
             {/* supplier performance */}
@@ -448,7 +448,7 @@ export function ExecutiveDashboard({ onOpenDrawer }: { onOpenDrawer: () => void 
               <div style={{ padding: "0 28px" }}>
                 <PanelHeader title={t("Supplier Performance", "供应商表现")} subtitle={t("Verified network · top 6", "已认证网络 · 前 6 名")} tag={t("Avg 94%", "均值 94%")} />
               </div>
-              <table className="rsn-table">
+              <div className="scroll-table"><table className="rsn-table">
                 <thead>
                   <tr>
                     <th>{t("Supplier", "供应商")}</th>
@@ -484,7 +484,7 @@ export function ExecutiveDashboard({ onOpenDrawer }: { onOpenDrawer: () => void 
                     </tr>
                   ))}
                 </tbody>
-              </table>
+              </table></div>
             </div>
 
             {/* alerts */}

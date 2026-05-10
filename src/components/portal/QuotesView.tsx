@@ -76,10 +76,10 @@ export function QuotesView() {
       </header>
 
       <div
+        className="scroll-table"
         style={{
           border: "1px solid var(--rsn-border)",
           borderRadius: 4,
-          overflow: "hidden",
         }}
       >
         <table className="rsn-table portal-quote-table">

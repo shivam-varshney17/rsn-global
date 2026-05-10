@@ -104,6 +104,7 @@ export function DeliverySection() {
                 style={{ padding: 32, position: "relative" }}
               >
                 <div
+                  className="delivery-row"
                   style={{
                     display: "grid",
                     gridTemplateColumns: "auto 1fr auto",
@@ -112,6 +113,7 @@ export function DeliverySection() {
                   }}
                 >
                   <div
+                    className="delivery-icon"
                     style={{
                       width: 44,
                       height: 44,
@@ -159,6 +161,7 @@ export function DeliverySection() {
                       {ti.promise}
                     </p>
                     <div
+                      className="delivery-meta"
                       style={{
                         display: "grid",
                         gridTemplateColumns: "1fr 1fr",
@@ -201,7 +204,7 @@ export function DeliverySection() {
                   </div>
 
                   <span
-                    className={`rsn-chip ${
+                    className={`rsn-chip delivery-status ${
                       i === 0 ? "rsn-chip-emerald" : i === 1 ? "rsn-chip-gold" : ""
                     }`}
                   >
