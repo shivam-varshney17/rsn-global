@@ -84,7 +84,7 @@ Reuse an existing good packshot instead of generating it again. Name each result
 
 ## EV01 / Existing preferred film — keep, inspect, adapt
 
-Do not generate a replacement from this prompt. Identify and watch the actual preferred video, preserve its source, then propose only the changes its placement needs. Keep the original file and useful footage.
+The user confirmed that the preferred video is already on the homepage. Keep its current homepage placement. Do not generate a replacement from this prompt. Identify and watch that actual clip, preserve its source and original file, then adapt the surrounding layout. Any proposed relocation is a creative decision to discuss, not a default implementation change.
 
 **Poster selection instruction:** Choose a sharp, useful real frame that represents the clip and is readable before playback. If the clip shows actual products, favour an identifiable product grouping. Export a desktop poster and an intentional mobile crop where the footage supports it. Do not create a poster promising content the video does not contain.
 

@@ -1,6 +1,6 @@
 # RSN ONE / the complete Claude build and media plan
 
-This is the current production handoff. It extends the master implementation prompt and supersedes any suggestion that a new homepage film is automatically required. The user will generate the new images and any selected new video. **Keep the existing video the user likes.** There is no festive design or campaign in this plan.
+This is the current production handoff. It extends the master implementation prompt and supersedes any suggestion that a new homepage film is automatically required. The user will generate the new images and any selected new video. **Keep the existing homepage video the user likes, in its current placement.** There is no festive design or campaign in this plan.
 
 ## 1. The result we are building
 
@@ -12,7 +12,7 @@ Use the original component and CSS in ../react/, the approved business brief in 
 
 ## 2. First protect what already works
 
-The user says an existing video is good. The current cloud could not inspect the live site, and that clip was not found in this older checkout. Its content, location, duration and source URL are unknown. Do not pretend it has been watched.
+The user confirmed that the preferred video is already on the homepage. Keep that video in its current homepage placement and build around it. The current cloud could not inspect the live site, and the clip was not found in this older checkout. Its section, content, duration and source URL remain unverified. Do not pretend it has been watched.
 
 In the actual site, locate the intended clip and record:
 
@@ -21,9 +21,9 @@ In the actual site, locate the intended clip and record:
 - What it actually shows and which part the user values.
 - Associated product IDs and any necessary rights/source record.
 
-Record it as **EV01 / existing keeper** in ../assets/asset-plan.json. Preserve the original file and current implementation until reviewed. If the user has not identified the exact clip, preserve all existing video references while continuing other work. Do not delete, overwrite, re-generate or silently replace the preferred video.
+Record it as **EV01 / existing keeper** in ../assets/asset-plan.json. Preserve the original file and current implementation until reviewed. If the homepage contains multiple candidate clips, preserve those references while identifying the intended video from the actual page and continuing other work. Do not delete, overwrite, re-generate or silently replace the preferred video.
 
-### Choose the role after watching
+### Confirm the existing role after watching
 
 | Actual content | Useful role |
 |---|---|
@@ -32,7 +32,7 @@ Record it as **EV01 / existing keeper** in ../assets/asset-plan.json. Preserve t
 | Informative narration or service explanation | User-initiated play with controls and captions, where the explanation belongs |
 | Sourcing/operations material | Keep in a relevant sourcing/about context; do not imply it shows the household shopping assortment |
 
-The default design works with a static hero. Video should have a deliberate role. A second new film is optional and must add something EV01 does not already do.
+Keep EV01 in its current homepage placement by default. The new design should work around it and retain a static fallback. The possible roles above are review guidance, not permission to relocate the preferred film. A second new film is optional and must add something EV01 does not already do.
 
 ## 3. Make one media inventory before generation
 
