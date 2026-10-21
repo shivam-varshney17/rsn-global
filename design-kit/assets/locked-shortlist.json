@@ -1,0 +1,112 @@
+{
+  "schemaVersion": 1,
+  "project": "RSN ONE / Global Select",
+  "selectionAuthority": "User-provided product shortlist",
+  "selectionStatus": "Product names locked; exact catalogue records and variants pending reference inspection",
+  "referenceAvailability": "User reports real packshots are downloading in their environment; no packshots have been supplied or inspected in this checkout",
+  "aliasPolicy": "Reference aliases are planning labels, never actual catalogue IDs",
+  "poolPolicy": "Nine reference entries do not require nine hero objects or nine featured-product cards",
+  "generationOwner": "user",
+  "products": [
+    {
+      "referenceAlias": "ref-mise-shampoo",
+      "userProductName": "Mise-en-scène shampoo",
+      "brand": "Mise-en-scène",
+      "intendedRoles": ["Primary vertical hero anchor", "Beauty & Care"],
+      "actualProductId": null,
+      "exactVariant": null,
+      "physicalDimensions": null,
+      "sourceAssets": [],
+      "status": "awaiting-reference-inspection"
+    },
+    {
+      "referenceAlias": "ref-anua-serum",
+      "userProductName": "Anua PDRN serum",
+      "brand": "Anua",
+      "intendedRoles": ["Hero foreground", "Beauty & Care"],
+      "actualProductId": null,
+      "exactVariant": null,
+      "physicalDimensions": null,
+      "sourceAssets": [],
+      "status": "awaiting-reference-inspection"
+    },
+    {
+      "referenceAlias": "ref-roundlab-sunscreen",
+      "userProductName": "Round Lab sunscreen",
+      "brand": "Round Lab",
+      "intendedRoles": ["Beauty & Care"],
+      "actualProductId": null,
+      "exactVariant": null,
+      "physicalDimensions": null,
+      "sourceAssets": [],
+      "status": "awaiting-reference-inspection"
+    },
+    {
+      "referenceAlias": "ref-atomy-mist",
+      "userProductName": "Atomy Rose Rain Mist",
+      "brand": "Atomy",
+      "intendedRoles": ["Beauty & Care"],
+      "actualProductId": null,
+      "exactVariant": null,
+      "physicalDimensions": null,
+      "sourceAssets": [],
+      "status": "awaiting-reference-inspection"
+    },
+    {
+      "referenceAlias": "ref-dish-detergent",
+      "userProductName": "Dish detergent",
+      "brand": null,
+      "intendedRoles": ["Later Home & Living category"],
+      "actualProductId": null,
+      "exactVariant": null,
+      "physicalDimensions": null,
+      "sourceAssets": [],
+      "status": "awaiting-reference-inspection"
+    },
+    {
+      "referenceAlias": "ref-water-pitcher",
+      "userProductName": "Water pitcher",
+      "brand": null,
+      "intendedRoles": ["Hero home cue", "Later Home & Living category"],
+      "actualProductId": null,
+      "exactVariant": null,
+      "physicalDimensions": null,
+      "sourceAssets": [],
+      "status": "awaiting-reference-inspection"
+    },
+    {
+      "referenceAlias": "ref-vitamins",
+      "userProductName": "Vitamins",
+      "brand": null,
+      "intendedRoles": ["Hero wellness cue", "Health & Wellness"],
+      "actualProductId": null,
+      "exactVariant": null,
+      "physicalDimensions": null,
+      "sourceAssets": [],
+      "status": "awaiting-reference-inspection"
+    },
+    {
+      "referenceAlias": "ref-unove-set",
+      "userProductName": "UNOVE set",
+      "brand": "UNOVE",
+      "intendedRoles": ["Later Gifts category"],
+      "actualProductId": null,
+      "exactVariant": null,
+      "physicalDimensions": null,
+      "setContents": null,
+      "sourceAssets": [],
+      "status": "awaiting-reference-inspection"
+    },
+    {
+      "referenceAlias": "ref-cafe-arabica",
+      "userProductName": "Café Arabica",
+      "brand": null,
+      "intendedRoles": ["Optional fifth hero object", "Later Gifts category"],
+      "actualProductId": null,
+      "exactVariant": null,
+      "physicalDimensions": null,
+      "sourceAssets": [],
+      "status": "awaiting-reference-inspection"
+    }
+  ]
+}

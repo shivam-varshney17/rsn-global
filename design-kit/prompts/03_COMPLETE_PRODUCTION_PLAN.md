@@ -1,5 +1,7 @@
 # RSN ONE / the complete Claude build and media plan
 
+**Current shortlist:** Use ../assets/locked-shortlist.json and ../assets/batch-01.json. The user's named products replace further speculative selection. The nine-product reference pool does not require nine homepage cards or nine hero objects. Exact catalogue IDs, variants and media files remain reference-binding tasks.
+
 This is the current production handoff. It extends the master implementation prompt and supersedes any suggestion that a new homepage film is automatically required. The user will generate the new images and any selected new video. **Keep the existing homepage video the user likes, in its current placement.** There is no festive design or campaign in this plan.
 
 ## 1. The result we are building

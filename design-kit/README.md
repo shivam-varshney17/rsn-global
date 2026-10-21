@@ -1,5 +1,7 @@
 # RSN ONE / Global Select evergreen design kit
 
+**Image/video agents:** [Claude coordinator command](prompts/05_IMAGE_VIDEO_AGENT_COMMAND.md) · [Batch-one product prompts](prompts/06_BATCH_ONE_PRODUCT_PROMPTS.md) · [Agent definitions](claude-agents/) · [Locked shortlist](assets/locked-shortlist.json). Batch one prepares desktop hero, mobile hero, Beauty and Wellness around the user's actual product references; the video agent preserves the existing homepage clip.
+
 An original, separate design handoff for Claude. The user's latest brief is the authority: household retail in Nepal and India, open browsing, membership required to order. There is no festival campaign in this kit.
 
 **Start here:** [Claude master prompt](prompts/01_CLAUDE_MASTER_PROMPT.md) · [Three directions](DIRECTIONS.md) · [Final proposed copy](COPY.md) · [Image and film prompts](prompts/02_MEDIA_PROMPTS.md) · [Reference access record](reference/RESEARCH.md) · [Integration contract](INTEGRATION.md).

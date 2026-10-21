@@ -12,6 +12,9 @@
   },
   "sourceOfTruth": "Actual catalogue, membership system, approved media and the user's business brief",
   "planningStatus": "No new media in this manifest has been generated or supplied. Paths are proposed output names, not live URLs.",
+  "productShortlistFile": "assets/locked-shortlist.json",
+  "batchOneFile": "assets/batch-01.json",
+  "referenceAliasPolicy": "Planning aliases link the locked product names; they are not verified variants or actual catalogue IDs",
   "newEditorialOutputTarget": 8,
   "cataloguePackshotWorkingCount": 6,
   "cataloguePackshotAllowedRange": [
@@ -34,14 +37,16 @@
         2400
       ],
       "aspectRatio": "4:3",
-      "inputReferencesRequired": "Three to five approved actual product references and dimensions",
+      "inputReferencesRequired": "Actual Mise-en-scène shampoo, Anua PDRN serum, water pitcher and vitamins references with scale cues; Café Arabica is optional",
+      "referenceAliases": ["ref-mise-shampoo", "ref-anua-serum", "ref-water-pitcher", "ref-vitamins"],
+      "optionalReferenceAliases": ["ref-cafe-arabica"],
       "actualProductIds": [],
       "sourceAssets": [],
       "finalAsset": null,
       "finalAltText": null,
       "rightsRecord": null,
       "generationOwner": "user",
-      "promptDocument": "prompts/04_READY_TO_GENERATE_ASSETS.md"
+      "promptDocument": "prompts/06_BATCH_ONE_PRODUCT_PROMPTS.md"
     },
     {
       "id": "H02",
@@ -56,13 +61,15 @@
       ],
       "aspectRatio": "4:5",
       "inputReferencesRequired": "Approved H01 and the same actual products",
+      "referenceAliases": ["ref-mise-shampoo", "ref-anua-serum", "ref-water-pitcher", "ref-vitamins"],
+      "optionalReferenceAliases": ["ref-cafe-arabica"],
       "actualProductIds": [],
       "sourceAssets": [],
       "finalAsset": null,
       "finalAltText": null,
       "rightsRecord": null,
       "generationOwner": "user",
-      "promptDocument": "prompts/04_READY_TO_GENERATE_ASSETS.md"
+      "promptDocument": "prompts/06_BATCH_ONE_PRODUCT_PROMPTS.md"
     },
     {
       "id": "C01",
@@ -76,14 +83,15 @@
         1600
       ],
       "aspectRatio": "1:1",
-      "inputReferencesRequired": "Actual available care products",
+      "inputReferencesRequired": "Actual Mise-en-scène shampoo, Anua PDRN serum, Round Lab sunscreen and Atomy Rose Rain Mist references",
+      "referenceAliases": ["ref-mise-shampoo", "ref-anua-serum", "ref-roundlab-sunscreen", "ref-atomy-mist"],
       "actualProductIds": [],
       "sourceAssets": [],
       "finalAsset": null,
       "finalAltText": null,
       "rightsRecord": null,
       "generationOwner": "user",
-      "promptDocument": "prompts/04_READY_TO_GENERATE_ASSETS.md"
+      "promptDocument": "prompts/06_BATCH_ONE_PRODUCT_PROMPTS.md"
     },
     {
       "id": "C02",
@@ -97,14 +105,15 @@
         1600
       ],
       "aspectRatio": "1:1",
-      "inputReferencesRequired": "Actual available eligible wellness products",
+      "inputReferencesRequired": "The exact actual vitamin product and packaging reference",
+      "referenceAliases": ["ref-vitamins"],
       "actualProductIds": [],
       "sourceAssets": [],
       "finalAsset": null,
       "finalAltText": null,
       "rightsRecord": null,
       "generationOwner": "user",
-      "promptDocument": "prompts/04_READY_TO_GENERATE_ASSETS.md"
+      "promptDocument": "prompts/06_BATCH_ONE_PRODUCT_PROMPTS.md"
     },
     {
       "id": "C03",
@@ -119,6 +128,7 @@
       ],
       "aspectRatio": "1:1",
       "inputReferencesRequired": "Actual available home/everyday objects",
+      "referenceAliases": ["ref-dish-detergent", "ref-water-pitcher"],
       "actualProductIds": [],
       "sourceAssets": [],
       "finalAsset": null,
@@ -140,6 +150,7 @@
       ],
       "aspectRatio": "1:1",
       "inputReferencesRequired": "Actual suitable catalogue goods",
+      "referenceAliases": ["ref-unove-set", "ref-cafe-arabica"],
       "actualProductIds": [],
       "sourceAssets": [],
       "finalAsset": null,
