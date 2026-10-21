@@ -4,6 +4,8 @@ An original, separate design handoff for Claude. The user's latest brief is the 
 
 **Start here:** [Claude master prompt](prompts/01_CLAUDE_MASTER_PROMPT.md) · [Three directions](DIRECTIONS.md) · [Final proposed copy](COPY.md) · [Image and film prompts](prompts/02_MEDIA_PROMPTS.md) · [Reference access record](reference/RESEARCH.md) · [Integration contract](INTEGRATION.md).
 
+**Full production handoff:** [Complete Claude build and media plan](prompts/03_COMPLETE_PRODUCTION_PLAN.md) · [Ready-to-generate photo/video prompts](prompts/04_READY_TO_GENERATE_ASSETS.md) · [Asset manifest](assets/asset-plan.json). This update preserves the user's preferred existing video and prioritises eight editorial images plus actual catalogue packshots; a new film is optional.
+
 **See the designs:** [Editorial desktop](evidence/editorial-overview.png) · [Editorial mobile](evidence/editorial-mobile-overview.png) · [Storefront](evidence/storefront-overview.png) · [Journal](evidence/journal-overview.png) · [Validation](evidence/VALIDATION.md).
 
 ## What is delivered

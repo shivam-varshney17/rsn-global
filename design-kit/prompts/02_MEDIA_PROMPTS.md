@@ -1,5 +1,7 @@
 # Product-image and film briefs
 
+**Production update:** The complete asset plan is now 03_COMPLETE_PRODUCTION_PLAN.md, with ready-to-generate prompts in 04_READY_TO_GENERATE_ASSETS.md. Preserve the user's preferred existing video. Section 7 below is an optional new-film direction, not an instruction to replace that clip or a launch requirement.
+
 Use these with actual approved product reference photographs. The references are prerequisites to a final product campaign, not optional inspiration. Generated scenes may compose the supplied products, but must preserve the actual packaging, proportions, labels, colours and identity. If the model cannot reproduce those accurately, composite the original product cut-outs into the scene instead.
 
 The existing preview uses original unbranded illustrations only. It makes no claim that those objects are sold. The prompts below do not license reference-brand imagery or create genuine customer/service evidence.

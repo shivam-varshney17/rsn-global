@@ -1,0 +1,308 @@
+{
+  "schemaVersion": 1,
+  "project": "RSN ONE / Global Select",
+  "direction": "01 Editorial / evergreen",
+  "audience": [
+    "households in Nepal",
+    "households in India"
+  ],
+  "proposition": {
+    "browse": "open",
+    "order": "membership required"
+  },
+  "sourceOfTruth": "Actual catalogue, membership system, approved media and the user's business brief",
+  "planningStatus": "No new media in this manifest has been generated or supplied. Paths are proposed output names, not live URLs.",
+  "newEditorialOutputTarget": 8,
+  "cataloguePackshotWorkingCount": 6,
+  "cataloguePackshotAllowedRange": [
+    4,
+    8
+  ],
+  "existingVideoToPreserve": "EV01",
+  "newVideoRequired": false,
+  "assetIdsArePlanningLabelsNotProductIds": true,
+  "assets": [
+    {
+      "id": "H01",
+      "kind": "editorial-image",
+      "role": "Desktop hero",
+      "status": "planned-not-generated",
+      "requiredWhen": "Selected layout needs this asset and the actual assortment supports it",
+      "plannedFilename": "h01-hero-desktop-master.png",
+      "masterDimensions": [
+        3200,
+        2400
+      ],
+      "aspectRatio": "4:3",
+      "inputReferencesRequired": "Three to five approved actual product references and dimensions",
+      "actualProductIds": [],
+      "sourceAssets": [],
+      "finalAsset": null,
+      "finalAltText": null,
+      "rightsRecord": null,
+      "generationOwner": "user",
+      "promptDocument": "prompts/04_READY_TO_GENERATE_ASSETS.md"
+    },
+    {
+      "id": "H02",
+      "kind": "editorial-image",
+      "role": "Mobile hero",
+      "status": "planned-not-generated",
+      "requiredWhen": "Selected layout needs this asset and the actual assortment supports it",
+      "plannedFilename": "h02-hero-mobile-master.png",
+      "masterDimensions": [
+        1600,
+        2000
+      ],
+      "aspectRatio": "4:5",
+      "inputReferencesRequired": "Approved H01 and the same actual products",
+      "actualProductIds": [],
+      "sourceAssets": [],
+      "finalAsset": null,
+      "finalAltText": null,
+      "rightsRecord": null,
+      "generationOwner": "user",
+      "promptDocument": "prompts/04_READY_TO_GENERATE_ASSETS.md"
+    },
+    {
+      "id": "C01",
+      "kind": "editorial-image",
+      "role": "Beauty & Care category",
+      "status": "planned-not-generated",
+      "requiredWhen": "Selected layout needs this asset and the actual assortment supports it",
+      "plannedFilename": "c01-beauty-care-master.png",
+      "masterDimensions": [
+        1600,
+        1600
+      ],
+      "aspectRatio": "1:1",
+      "inputReferencesRequired": "Actual available care products",
+      "actualProductIds": [],
+      "sourceAssets": [],
+      "finalAsset": null,
+      "finalAltText": null,
+      "rightsRecord": null,
+      "generationOwner": "user",
+      "promptDocument": "prompts/04_READY_TO_GENERATE_ASSETS.md"
+    },
+    {
+      "id": "C02",
+      "kind": "editorial-image",
+      "role": "Health & Wellness category",
+      "status": "planned-not-generated",
+      "requiredWhen": "Selected layout needs this asset and the actual assortment supports it",
+      "plannedFilename": "c02-wellness-master.png",
+      "masterDimensions": [
+        1600,
+        1600
+      ],
+      "aspectRatio": "1:1",
+      "inputReferencesRequired": "Actual available eligible wellness products",
+      "actualProductIds": [],
+      "sourceAssets": [],
+      "finalAsset": null,
+      "finalAltText": null,
+      "rightsRecord": null,
+      "generationOwner": "user",
+      "promptDocument": "prompts/04_READY_TO_GENERATE_ASSETS.md"
+    },
+    {
+      "id": "C03",
+      "kind": "editorial-image",
+      "role": "Home & Living category",
+      "status": "planned-not-generated",
+      "requiredWhen": "Selected layout needs this asset and the actual assortment supports it",
+      "plannedFilename": "c03-home-living-master.png",
+      "masterDimensions": [
+        1600,
+        1600
+      ],
+      "aspectRatio": "1:1",
+      "inputReferencesRequired": "Actual available home/everyday objects",
+      "actualProductIds": [],
+      "sourceAssets": [],
+      "finalAsset": null,
+      "finalAltText": null,
+      "rightsRecord": null,
+      "generationOwner": "user",
+      "promptDocument": "prompts/04_READY_TO_GENERATE_ASSETS.md"
+    },
+    {
+      "id": "C04",
+      "kind": "editorial-image",
+      "role": "Gifts category",
+      "status": "planned-not-generated",
+      "requiredWhen": "Selected layout needs this asset and the actual assortment supports it",
+      "plannedFilename": "c04-gifts-master.png",
+      "masterDimensions": [
+        1600,
+        1600
+      ],
+      "aspectRatio": "1:1",
+      "inputReferencesRequired": "Actual suitable catalogue goods",
+      "actualProductIds": [],
+      "sourceAssets": [],
+      "finalAsset": null,
+      "finalAltText": null,
+      "rightsRecord": null,
+      "generationOwner": "user",
+      "promptDocument": "prompts/04_READY_TO_GENERATE_ASSETS.md"
+    },
+    {
+      "id": "E01",
+      "kind": "editorial-image",
+      "role": "Everyday editorial scene",
+      "status": "planned-not-generated",
+      "requiredWhen": "Selected layout needs this asset and the actual assortment supports it",
+      "plannedFilename": "e01-everyday-scene-master.png",
+      "masterDimensions": [
+        3000,
+        2000
+      ],
+      "aspectRatio": "3:2",
+      "inputReferencesRequired": "Actual product references and plausible use",
+      "actualProductIds": [],
+      "sourceAssets": [],
+      "finalAsset": null,
+      "finalAltText": null,
+      "rightsRecord": null,
+      "generationOwner": "user",
+      "promptDocument": "prompts/04_READY_TO_GENERATE_ASSETS.md"
+    },
+    {
+      "id": "E02",
+      "kind": "editorial-image",
+      "role": "Informative product/material detail",
+      "status": "planned-not-generated",
+      "requiredWhen": "Selected layout needs this asset and the actual assortment supports it",
+      "plannedFilename": "e02-product-detail-master.png",
+      "masterDimensions": [
+        2400,
+        1800
+      ],
+      "aspectRatio": "4:3",
+      "inputReferencesRequired": "Actual product and verified visible detail",
+      "actualProductIds": [],
+      "sourceAssets": [],
+      "finalAsset": null,
+      "finalAltText": null,
+      "rightsRecord": null,
+      "generationOwner": "user",
+      "promptDocument": "prompts/04_READY_TO_GENERATE_ASSETS.md"
+    },
+    {
+      "id": "P01",
+      "kind": "catalogue-packshot",
+      "role": "Real featured product planning slot",
+      "status": "real-product-selection-pending",
+      "actualProductId": null,
+      "sourceAsset": null,
+      "finalAsset": null,
+      "policy": "Reuse approved existing photography; retouch/composite only if needed. Six slots are a working example within the four-to-eight featured-product range.",
+      "generationOwner": "reuse-first"
+    },
+    {
+      "id": "P02",
+      "kind": "catalogue-packshot",
+      "role": "Real featured product planning slot",
+      "status": "real-product-selection-pending",
+      "actualProductId": null,
+      "sourceAsset": null,
+      "finalAsset": null,
+      "policy": "Reuse approved existing photography; retouch/composite only if needed. Six slots are a working example within the four-to-eight featured-product range.",
+      "generationOwner": "reuse-first"
+    },
+    {
+      "id": "P03",
+      "kind": "catalogue-packshot",
+      "role": "Real featured product planning slot",
+      "status": "real-product-selection-pending",
+      "actualProductId": null,
+      "sourceAsset": null,
+      "finalAsset": null,
+      "policy": "Reuse approved existing photography; retouch/composite only if needed. Six slots are a working example within the four-to-eight featured-product range.",
+      "generationOwner": "reuse-first"
+    },
+    {
+      "id": "P04",
+      "kind": "catalogue-packshot",
+      "role": "Real featured product planning slot",
+      "status": "real-product-selection-pending",
+      "actualProductId": null,
+      "sourceAsset": null,
+      "finalAsset": null,
+      "policy": "Reuse approved existing photography; retouch/composite only if needed. Six slots are a working example within the four-to-eight featured-product range.",
+      "generationOwner": "reuse-first"
+    },
+    {
+      "id": "P05",
+      "kind": "catalogue-packshot",
+      "role": "Real featured product planning slot",
+      "status": "real-product-selection-pending",
+      "actualProductId": null,
+      "sourceAsset": null,
+      "finalAsset": null,
+      "policy": "Reuse approved existing photography; retouch/composite only if needed. Six slots are a working example within the four-to-eight featured-product range.",
+      "generationOwner": "reuse-first"
+    },
+    {
+      "id": "P06",
+      "kind": "catalogue-packshot",
+      "role": "Real featured product planning slot",
+      "status": "real-product-selection-pending",
+      "actualProductId": null,
+      "sourceAsset": null,
+      "finalAsset": null,
+      "policy": "Reuse approved existing photography; retouch/composite only if needed. Six slots are a working example within the four-to-eight featured-product range.",
+      "generationOwner": "reuse-first"
+    },
+    {
+      "id": "EV01",
+      "kind": "existing-video",
+      "role": "User-preferred existing keeper",
+      "status": "preserve-pending-identification",
+      "preserveOriginal": true,
+      "page": null,
+      "section": null,
+      "sourceAsset": null,
+      "poster": null,
+      "durationSeconds": null,
+      "dimensions": null,
+      "audioReviewed": false,
+      "videoReviewed": false,
+      "placement": "keep-current-until-reviewed",
+      "finalAsset": null,
+      "policy": "Preserve all existing video references until the exact preferred clip is identified. Do not overwrite or regenerate it."
+    },
+    {
+      "id": "EV01-P",
+      "kind": "existing-video-poster",
+      "role": "Sharp representative frame from EV01",
+      "status": "pending-existing-video-review",
+      "sourceAsset": null,
+      "finalAsset": null,
+      "policy": "Select a genuine frame; do not invent the contents of the clip."
+    },
+    {
+      "id": "NV01",
+      "kind": "optional-new-video",
+      "role": "Product microfilm only if EV01 leaves a useful role unfilled",
+      "status": "optional-not-authorised-for-automatic-generation",
+      "required": false,
+      "plannedDurationSeconds": [
+        8,
+        10
+      ],
+      "sourceAssets": [
+        "H01",
+        "H02",
+        "E02"
+      ],
+      "finalAsset": null,
+      "mobileAdaptation": null,
+      "poster": null,
+      "generationOwner": "user",
+      "promptDocument": "prompts/04_READY_TO_GENERATE_ASSETS.md"
+    }
+  ]
+}
