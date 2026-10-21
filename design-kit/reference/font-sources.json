@@ -1,0 +1,32 @@
+[
+  {
+    "name": "fraunces.ttf",
+    "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/fraunces/Fraunces%5BSOFT%2CWONK%2Copsz%2Cwght%5D.ttf",
+    "status": 200,
+    "bytes": 360440
+  },
+  {
+    "name": "inter.ttf",
+    "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/inter/Inter%5Bopsz%2Cwght%5D.ttf",
+    "status": 200,
+    "bytes": 876576
+  },
+  {
+    "name": "Fraunces-OFL.txt",
+    "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/fraunces/OFL.txt",
+    "status": 200,
+    "bytes": 4391
+  },
+  {
+    "name": "Inter-OFL.txt",
+    "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/inter/OFL.txt",
+    "status": 200,
+    "bytes": 4377
+  },
+  {
+    "name": "fraunces-italic.ttf",
+    "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/fraunces/Fraunces-Italic%5BSOFT%2CWONK%2Copsz%2Cwght%5D.ttf",
+    "status": 200,
+    "bytes": 414904
+  }
+]

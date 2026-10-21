@@ -1,0 +1,37 @@
+[
+  {
+    "reference": "aesop",
+    "url": "https://www.aesop.com/",
+    "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+  },
+  {
+    "reference": "toast",
+    "url": "https://www.toa.st/",
+    "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+  },
+  {
+    "reference": "muji",
+    "url": "https://www.muji.com/",
+    "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+  },
+  {
+    "reference": "behance",
+    "url": "https://www.behance.net/search/projects?search=editorial%20ecommerce%20website",
+    "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+  },
+  {
+    "reference": "pinterest",
+    "url": "https://www.pinterest.com/search/pins/?q=editorial%20ecommerce%20website",
+    "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+  },
+  {
+    "reference": "rsnone",
+    "url": "https://rsnone.com/",
+    "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+  },
+  {
+    "reference": "globalselect",
+    "url": "https://rsnone.com/globalselect",
+    "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+  }
+]

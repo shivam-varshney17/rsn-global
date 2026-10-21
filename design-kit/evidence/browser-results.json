@@ -1,0 +1,66 @@
+{
+  "scope": "Independent design preview only; not production commerce verification",
+  "passed": 15,
+  "results": [
+    {
+      "name": "initial HTML includes the retail proposition and noindex review boundary",
+      "passed": true
+    },
+    {
+      "name": "editorial desktop renders and loads the local typography and all illustrations",
+      "passed": true
+    },
+    {
+      "name": "storefront desktop renders and loads the local typography and all illustrations",
+      "passed": true
+    },
+    {
+      "name": "journal desktop renders and loads the local typography and all illustrations",
+      "passed": true
+    },
+    {
+      "name": "country selection switches to the Nepal view",
+      "passed": true
+    },
+    {
+      "name": "search retains market and design context",
+      "passed": true
+    },
+    {
+      "name": "empty search has an honest reset destination",
+      "passed": true
+    },
+    {
+      "name": "a category leads to its filtered selection",
+      "passed": true
+    },
+    {
+      "name": "product details link is a clearly labelled integration boundary",
+      "passed": true
+    },
+    {
+      "name": "the shopping FAQ is keyboard-operable",
+      "passed": true
+    },
+    {
+      "name": "360px mobile retains two product columns without horizontal overflow",
+      "passed": true
+    },
+    {
+      "name": "390px mobile retains two product columns without horizontal overflow",
+      "passed": true
+    },
+    {
+      "name": "mobile navigation exposes the real shopping actions",
+      "passed": true
+    },
+    {
+      "name": "all three mobile directions keep the primary shopping action visible",
+      "passed": true
+    },
+    {
+      "name": "no browser runtime error",
+      "passed": true
+    }
+  ]
+}

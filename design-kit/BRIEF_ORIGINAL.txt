@@ -1,0 +1,291 @@
+Design a new homepage for RSN ONE, centred on Global Select.
+
+BUSINESS AND POSITIONING
+
+RSN ONE serves households in Nepal and India. Its products are sourced globally.
+
+Global Select is the main shopping collection: selected beauty, wellbeing, personal care, home and everyday products from international brands.
+
+RSN ONE is the curator and the membership relationship behind that collection.
+
+Visitors should quickly understand:
+1. What products they can discover.
+2. Why RSN ONE selected them.
+3. That browsing is open.
+4. That membership is required to order.
+5. How to explore the collection.
+
+Make the first impression welcoming, credible and desirable. The products should feel relevant to everyday life in Nepal and India.
+
+Keep membership fees off the homepage. Do not describe membership as free, paid, lifetime, invitation-only or limited until those terms are confirmed.
+
+CREATIVE DIRECTION
+
+Create a warm editorial retail experience with clear shopping navigation.
+
+The mood should be:
+- Thoughtful and confident.
+- Human and grounded.
+- Premium through photography, typography and careful selection.
+- Comfortable enough for everyday shopping.
+- Clear enough for someone encountering RSN ONE for the first time.
+
+Use the existing brand identity as the foundation. Give the homepage a stronger balance between atmosphere and practical shopping information.
+
+Reference directions:
+- Aesop: precise product categories and considered brand communication.
+- TOAST: everyday-life storytelling, materials and a human editorial voice.
+- MUJI: understandable categories and useful products presented plainly.
+
+Translate those principles into RSN ONE’s own identity. Additional Pinterest and Behance research should favour complete retail websites and mobile layouts, with specific references cited after inspection.
+
+VISUAL LANGUAGE
+
+Colour:
+- Warm cream for the main reading and browsing surfaces.
+- Espresso brown for navigation accents, selected brand sections and membership.
+- Restrained brass for small highlights, rules and details.
+- Natural colours from the merchandise and photography.
+
+Existing brand colours include:
+Cream: #F1E9DA
+Espresso: #1F1712
+Brass: #C9A25A
+
+Let product imagery provide visual variety. Keep the interface palette disciplined.
+
+Typography:
+- An expressive, readable editorial serif for the main headline and selected section headings.
+- A clean sans serif for navigation, product information, descriptions and buttons.
+- Fraunces and Inter are already available in the project.
+- Use sentence case for most headings.
+- Keep uppercase labels short and readable.
+- Reserve condensed campaign typography for occasional campaigns.
+
+Layout:
+- A clear grid with deliberate alignment.
+- Generous spacing around important content.
+- Compact enough that visitors reach products quickly.
+- Simple buttons and restrained borders.
+- A mix of editorial image compositions and orderly product grids.
+
+The visual character should come from real merchandise, strong composition and typography. Avoid repeating decorative cards, oversized pills, floating badges, artificial urgency or elaborate animation across every section.
+
+HOMEPAGE STRUCTURE
+
+1. COMPACT HEADER
+
+Include:
+RSN ONE logo
+Global Select
+Shop by category
+How membership works
+Search
+Account
+Bag
+
+Make Global Select the obvious shopping destination.
+
+Use ordinary labels people understand. Supplier recruitment and administrative access belong in secondary navigation or the footer.
+
+Provide a visible country/currency control when supported. Nepal and India should feel explicitly considered, without forcing an opening country-selection screen.
+
+2. CLEAR, PRODUCT-LED HERO
+
+Preferred desktop composition:
+A split layout with a readable text area and strong product photography.
+
+Suggested copy:
+
+Eyebrow:
+RSN ONE · GLOBAL SELECT
+
+Headline:
+Global finds.
+For your everyday.
+
+Supporting text:
+Beauty, wellbeing and everyday goods, thoughtfully selected from Korea, Thailand and beyond. Discover your next favourite, closer to home.
+
+Primary action:
+Explore Global Select
+
+Secondary action:
+How it works
+
+Small clarification:
+Browse freely. Join the club when you’re ready to order.
+
+The headline may be refined, but the supporting sentence must plainly explain the offer.
+
+Use real products from the available collection. Show recognisable packaging, materials and useful context.
+
+A beauty-only hero will make the business read as beauty-led. If the intended offer is broader, show a carefully composed selection from several genuinely stocked categories.
+
+Keep the main action visible and readable on mobile. An optional film must support a strong static image and must not delay understanding or interaction.
+
+3. SHOP BY CATEGORY
+
+Bring categories into the first scroll.
+
+Use familiar, merchandise-led labels such as:
+Beauty & Care
+Health & Wellness
+Home & Living
+Gifts
+
+Only feature categories with a useful available assortment.
+
+Image-led category tiles should show what each category contains. Country and brand are secondary discovery routes.
+
+4. FEATURED GLOBAL SELECT PRODUCTS
+
+Show four to eight carefully chosen products.
+
+Suggested heading:
+Meet the selection.
+
+Each product should communicate:
+- A strong product photograph.
+- Brand.
+- Short, readable product name.
+- Verified origin where relevant.
+- Correct price and membership state.
+- A clear product-detail action.
+
+Keep long technical descriptions on product pages.
+
+Use actual products and genuine availability. Maintain the existing backend rules for prices, member access and purchasing.
+
+5. MEMBERSHIP, EXPLAINED SIMPLY
+
+Introduce a concise membership section after the first product selection.
+
+Suggested heading:
+Browse first.
+Join when it fits.
+
+Explain:
+Explore freely.
+Understand membership.
+Order as a member.
+
+Use short, concrete sentences and a link to membership information.
+
+Explain real benefits clearly. Keep fees and unconfirmed founding offers off the homepage.
+
+6. WHY THESE PRODUCTS
+
+Give visitors evidence of the selection process.
+
+Use an authentic sourcing, inspection, packing or dispatch photograph with a useful caption.
+
+Explain:
+Who selects the products?
+What makes a product worth including?
+What information can shoppers inspect?
+How does RSN ONE support the purchase?
+
+Connect the brand story to a concrete customer benefit.
+
+Keep one strong sourcing section instead of several sections repeating abstract ideas about care, journeys and discovery.
+
+7. PRACTICAL BUYING QUESTIONS
+
+Answer a short set of questions:
+Can I browse without joining?
+How do I order?
+Where do you deliver?
+Which currency will I pay in?
+How do returns work?
+
+Keep the language direct.
+
+Delivery coverage, timelines, duties and return conditions must reflect actual operations in each market. Targeting Nepal and India does not automatically establish identical service in both countries.
+
+8. FINAL INVITATION AND FOOTER
+
+Suggested closing:
+Find something for your everyday.
+
+Primary action:
+Browse Global Select
+
+Secondary action:
+How membership works
+
+Footer:
+Customer support
+Delivery
+Returns
+Membership
+About RSN ONE
+Sourcing
+Supplier information
+Newsletter
+Legal information
+
+Keep newsletter signup and concierge access available without competing with the first shopping action.
+
+PHOTOGRAPHY
+
+Prioritise:
+- Actual products currently available.
+- Clear packaging and realistic scale.
+- Consistent lighting.
+- Natural materials and believable environments.
+- People using products where suitable.
+- Genuine sourcing and service photography.
+
+Distinguish international brands from RSN ONE’s own products. Do not visually imply that RSN ONE manufactures every item.
+
+Use product photographs that make the selection easier to understand. Decorative lifestyle imagery should have a clear role.
+
+COPY STYLE
+
+Write as a knowledgeable, welcoming shopkeeper.
+
+Use concrete words: product, brand, origin, selection, browse, membership, delivery.
+
+Keep sentences short and specific.
+
+A little poetry can create atmosphere, but each major section must communicate useful information.
+
+Reduce repeated abstract headlines such as:
+“Some things find you.”
+“A world, considered.”
+“Chosen slowly.”
+
+Give the visitor something new to understand in each section.
+
+MOBILE EXPERIENCE
+
+Design mobile as a primary experience.
+
+Ensure:
+- The product proposition and primary action appear early.
+- Text remains readable without zooming.
+- Navigation labels are understandable.
+- Product cards work in a two-column grid.
+- Touch targets are comfortable.
+- Consent UI does not cover the main action.
+- The concierge stays unobtrusive.
+- Essential content remains visible without animation.
+- Images load efficiently and layouts remain stable.
+
+DESIGN SUCCESS CRITERIA
+
+After seeing the first screen briefly, a new visitor should be able to say:
+
+“RSN ONE offers selected global products for everyday life. I can browse Global Select, and membership is how I order.”
+
+The page should help them find a relevant product, understand the club and trust the next step.
+
+Produce:
+1. Desktop and mobile homepage designs.
+2. A clear typography, colour and spacing system.
+3. Final proposed copy for every section.
+4. A rationale connecting design choices to the audience and positioning.
+5. Specific reference links, distinguishing inspected examples from suggestions.
+
+For implementation, preserve the existing authentication, catalogue, membership and pricing logic.
